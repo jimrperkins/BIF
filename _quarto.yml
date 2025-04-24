@@ -18,7 +18,7 @@ book:
     - intro_r_redes.qmd
     - seq_genomica.qmd
     - redes_teoria_grafos.qmd
-    - biología_sintetica.qmd
+    - biologia_sintetica.qmd
   downloads: [pdf]
 
 bibliography: references.bib
