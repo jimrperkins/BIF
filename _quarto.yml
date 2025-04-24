@@ -3,20 +3,29 @@ project:
   output-dir: docs
 
 book:
-  title: "BIF"
-  author: "Norah Jones"
-  date: "9/4/2025"
+  title: "Bioinformática y Tratamiento de Datos (BIF)"
+  subtitle: "Máster en Biotecnología Avanzada – Universidad Internacional de Andalucía & Universidad de Málaga"
+  author:
+    - name: "James R Perkins"
+    - name: "M. Gonzalo Claros Díaz"
+    - name: "Juan Antonio Garcia Ranea"
+    - name: "Enrique Viguera Mínguez"
+    - name: "Carlos Rodriguez Caso"
+  date: "2025-04-23"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
+    - intro_computacion.qmd
+    - intro_r_redes.qmd
+    - seq_genomica.qmd
+    - redes_teoria_grafos.qmd
+    - biología_sintetica.qmd
   downloads: [pdf]
 
 bibliography: references.bib
 
 format:
   html:
+    code-copy: false
     theme: cosmo
     toc: true
     number-sections: true

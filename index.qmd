@@ -1,9 +1,8 @@
-# Preface {.unnumbered}
+# Prefacio {.unnumbered}
+Este libro ha sido creado como un recurso complementario para la asignatura Bioinformática y Tratamiento de Datos (BIF), que forma parte del Máster en Biotecnología Avanzada, impartido conjuntamente por la Universidad Internacional de Andalucía (UNIA) y la Universidad de Málaga.
 
-This is a Quarto book.
+El contenido del libro se organiza en ocho capítulos, cada uno de los cuales corresponde a uno de los ocho temas fundamentales que se imparten en la asignatura. Este material no pretende sustituir a las clases ni a las presentaciones, sino servir como complemento. En cada tema, encontrarás explicaciones adicionales, ejemplos prácticos y demostraciones con código que te ayudarán a comprender mejor los conceptos presentados en clase.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+Este recurso ha sido desarrollado con Quarto, una plataforma que permite integrar texto, código y resultados de manera fluida. Este formato favorece una experiencia de aprendizaje interactiva y reproducible, ayudando a conectar la teoría con la práctica en bioinformática.
 
-```{r}
-1 + 1
-```
+Te animamos a experimentar con los ejemplos, modificar el código y explorar los datos. La bioinformática se aprende haciendo, y esperamos que este libro te acompañe y te apoye en ese proceso.

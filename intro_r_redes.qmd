@@ -1,11 +1,10 @@
-# INTRODUCCIÓN A R Y REDES
+# Introducción a R y redes
 
-
-# Repaso: descargar archivos
+## Repaso: descargar archivos
 
 Antes de empezar con los análisis en R, repasaremos cómo obtener y preparar los datos. Aquí tienes los pasos esenciales para descargar y procesar un archivo desde UniProt utilizando la terminal.
 
-## Crear carpeta de trabajo
+### Crear carpeta de trabajo
 
 Abre tu terminal y ejecuta:
 
@@ -16,9 +15,7 @@ cd redes
 
 Esto crea una nueva carpeta llamada `redes` y cambia el directorio de trabajo a ella. Así mantenemos todos los archivos organizados.
 
-## Descargar archivo desde UniProt
-
-
+### Descargar archivo desde UniProt
 
 Utiliza `wget` para descargar información sobre hexoquinasas:
 
@@ -36,7 +33,7 @@ wget 'https://rest.uniprot.org/uniprotkb/stream?query=hexokinase+AND+(reviewed:t
 
 ---
 
-# Crear archivo de red para la práctica
+## Crear archivo de red para la práctica
 
 Vamos a procesar ese archivo para obtener un archivo más sencillo que podremos usar para construir redes en R.
 
@@ -57,7 +54,7 @@ Este archivo contendrá dos columnas: el identificador de proteína y la especie
 
 ---
 
-# ¿Por qué hacemos esto?
+## ¿Por qué hacemos esto?
 
 La idea es tener un conjunto de datos **realista y sencillo** que nos permita centrarnos en aprender R y cómo manejar estructuras de red.
 
@@ -68,23 +65,19 @@ En esta primera sesión trabajaremos con `net`, el archivo que acabamos de gener
 Este pequeño archivo simula una **red bipartita** entre proteínas y organismos. Más adelante exploraremos cómo convertir este tipo de datos en grafos utilizando R.
 :::
 
-```markdown
----
-title: "INTRODUCCIÓN A R Y REDES"
-format: html
----
+Ahora que tenemos nuestro fichero listo, podemos empezar de mirar el analisis con R.
 
-# ¿Qué es R?
+## ¿Qué es R?
 
 **R** es un lenguaje y entorno de programación orientado al análisis estadístico y la representación gráfica de datos. Desarrollado originalmente por Ross Ihaka y Robert Gentleman en la Universidad de Auckland, R ha evolucionado hasta convertirse en una herramienta esencial en campos como la bioinformática.
 
-## Componentes principales de R
+### Componentes principales de R
 
 - **Terminal propia**: Permite la ejecución directa de comandos y scripts.
 - **Lenguaje de programación**: Ofrece estructuras y funciones para el desarrollo de algoritmos personalizados.
 - **Gestor de ventanas gráficas**: Facilita la creación y visualización de gráficos y representaciones visuales de datos.
 
-## Iniciando la terminal de R
+### Iniciando la terminal de R
 
 Para comenzar a utilizar R:
 
@@ -102,13 +95,13 @@ Para comenzar a utilizar R:
 ```
 
 
-En las terminales de sistemas Linux/bash, los comandos se ingresan en texto blanco sobre fondo negro. Al iniciar R, se imprime algunos mensajes sobre la version de R, copyright y otra infomacion, y el prompt cambia a `>`, indicando que ahora estás en el entorno de R.
+En las terminales de sistemas Linux/bash, los comandos se ingresan en texto blanco sobre fondo negro. Al iniciar R, el fondo cambia a gris y el prompt cambia a `>`, indicando que ahora estás en el entorno de R.
 
-# Aprendiendo R: Variables
+## Aprendiendo R: Variables
 
 En R, las variables son contenedores que almacenan datos. Se utilizan para guardar y manipular información durante el análisis.
 
-## Creación y uso de variables
+### Creación y uso de variables
 
 ```r
 > texto <- 'ejemplo'
@@ -128,11 +121,11 @@ En R, las variables son contenedores que almacenan datos. Se utilizan para guard
 - **Cadenas de texto**: Se encierran entre comillas simples o dobles.
 - **Operaciones**: R permite realizar operaciones matemáticas básicas con variables numéricas.
 
-# Trabajando con datos: Valores especiales y comparaciones
+## Trabajando con datos: Valores especiales y comparaciones
 
 R maneja valores especiales que representan datos faltantes o indefinidos.
 
-## Valores especiales
+### Valores especiales
 
 ```r
 > 5 + NA
@@ -151,7 +144,7 @@ R maneja valores especiales que representan datos faltantes o indefinidos.
 - **NA**: Representa un valor faltante o no disponible.
 - **NULL**: Indica que un objeto no contiene información.
 
-## Comparaciones
+### Comparaciones
 
 ```r
 > 2 == 2
@@ -168,11 +161,11 @@ R maneja valores especiales que representan datos faltantes o indefinidos.
 - **`!=`**: Verifica diferencia.
 - **`<=`**: Verifica menor o igual.
 
-# Aprendiendo R: Variables compuestas
+## Aprendiendo R: Variables compuestas
 
 R permite trabajar con estructuras de datos más complejas, como los vectores, que son secuencias de elementos del mismo tipo.
 
-## Creación y acceso a vectores
+### Creación y acceso a vectores
 
 ```r
 > texto <- c('ab', 'cd', 'ef')
@@ -197,7 +190,7 @@ R permite trabajar con estructuras de datos más complejas, como los vectores, q
 - **Acceso**: Se accede a los elementos mediante corchetes `[]` y especificando la posición.
 - **Operaciones**: Las operaciones matemáticas se aplican a cada elemento del vector.
 
-## Creación avanzada de vectores
+### Creación avanzada de vectores
 
 ```r
 > v <- 1:7
@@ -225,16 +218,12 @@ R permite trabajar con estructuras de datos más complejas, como los vectores, q
 - **Repeticiones**: `rep()` repite elementos según lo especificado.
 - **Secuencias con paso**: `seq()` genera secuencias con un intervalo definido.
 
-# Operaciones con vectores
 
-Los vectores en R permiten realizar operaciones matemáticas y lógicas de manera eficiente.
-
-```markdown
-## Operaciones con Vectores
+### Operaciones con Vectores
 
 Los vectores en R permiten realizar operaciones entre elementos de manera eficiente y fácil. Vamos a ver algunos ejemplos prácticos:
 
-### Sumar y multiplicar vectores
+#### Sumar y multiplicar vectores
 
 ```r
 > v1 <- 1:5
@@ -249,8 +238,8 @@ Los vectores en R permiten realizar operaciones entre elementos de manera eficie
 [1] 2 4 6 8 10
 ```
 
-- **Operaciones element-wise**: Cuando realizamos operaciones entre vectores o entre un vector y un valor escalar, R realiza la operación de manera elemento a elemento.
-- **Error de tamaños**: Si intentamos operar vectores de diferentes tamaños, como en el siguiente ejemplo, se genera un error. Esto ocurre porque R no sabe cómo emparejar los elementos de los vectores.
+- **Operaciones element-wise**: Cuando realizamos operaciones entre vectores o entre un vector y un valor escalar, R realiza la operación de manera elemento a elemento.
+- **Error de tamaños**: Si intentamos operar vectores de diferentes tamaños, como en el siguiente ejemplo, se genera un error. Esto ocurre porque R no sabe cómo emparejar los elementos de los vectores.
 
 ```r
 > v1 + c(1,7)
@@ -258,7 +247,7 @@ Error in v1 + c(1, 7) :
   longer object length is not a multiple of shorter object length
 ```
 
-### Operaciones lógicas con vectores
+#### Operaciones lógicas con vectores
 
 Los vectores también pueden ser usados en operaciones lógicas, que devuelven un vector de valores lógicos (`TRUE` o `FALSE`).
 
@@ -292,7 +281,7 @@ Los vectores también pueden ser usados en operaciones lógicas, que devuelven u
 [1] FALSE
 ```
 
-### Formas de obtener elementos de un vector
+#### Formas de obtener elementos de un vector
 
 Acceder a elementos específicos de un vector en R es muy sencillo, y existen diferentes formas de hacerlo:
 
@@ -310,10 +299,10 @@ Acceder a elementos específicos de un vector en R es muy sencillo, y existen di
 [1] 1 2
 ```
 
-- **Acceso directo**: Usamos los índices entre corchetes `[]` para acceder a un elemento o a un subconjunto del vector.
-- **Acceso con vectores lógicos**: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.
+- **Acceso directo**: Usamos los índices entre corchetes `[]` para acceder a un elemento o a un subconjunto del vector.
+- **Acceso con vectores lógicos**: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.
 
-### Formas avanzadas de obtener elementos de un vector
+#### Formas avanzadas de obtener elementos de un vector
 
 R ofrece métodos más avanzados para acceder a elementos en vectores. Aquí te mostramos algunos de ellos:
 
@@ -333,10 +322,10 @@ R ofrece métodos más avanzados para acceder a elementos en vectores. Aquí te 
 [1] 2 3
 ```
 
-- **`which()`**: Devuelve los índices de los elementos que cumplen una condición lógica (por ejemplo, `z > 3`).
-- **`match()`**: Devuelve los índices de las posiciones de los elementos de un vector en otro.
+- **`which()`**: Devuelve los índices de los elementos que cumplen una condición lógica (por ejemplo, `z > 3`).
+- **`match()`**: Devuelve los índices de las posiciones de los elementos de un vector en otro.
 
-# Aplicaciones en Bioinformática
+## Aplicaciones en Bioinformática
 
 En bioinformática, la manipulación de vectores y matrices es esencial para manejar grandes cantidades de datos, como secuencias genómicas o interacciones proteína-proteína. Por ejemplo, podemos usar vectores para almacenar información sobre expresiones génicas y realizar operaciones de análisis, como comparar los valores de expresión en diferentes condiciones experimentales o identificar genes diferencialmente expresados.
 
@@ -354,8 +343,8 @@ expr_condition_1 > expr_condition_2
 
 Aquí, estamos comparando los niveles de expresión génica entre dos condiciones, y el resultado nos indica qué genes tienen una mayor expresión en la primera condición. Esto es solo un ejemplo sencillo de cómo las operaciones con vectores pueden ser aplicadas en el análisis de datos biológicos.
 
-```markdown
-## Funciones sobre Vectores
+
+### Funciones sobre Vectores
 
 En R, las funciones aplicadas a vectores nos permiten obtener estadísticas y realizar análisis rápidamente sobre los datos. Aquí algunos ejemplos útiles:
 
@@ -398,7 +387,7 @@ Una matriz es similar a un vector, pero tiene dos dimensiones: filas y columnas.
 - **Dimensiones de la matriz**: Las matrices tienen dos dimensiones, lo que permite representar diferentes aspectos de los datos (como genes y muestras en un estudio).
 - **Operaciones en matrices**: Solo puede contener un tipo de dato (generalmente numérico).
 
-## Cómo Acceder a los Datos de una Matriz
+### Cómo Acceder a los Datos de una Matriz
 
 Las matrices tienen una estructura bidimensional, lo que permite acceder a sus elementos de varias maneras, ya sea por filas, columnas o índices específicos.
 
@@ -511,7 +500,7 @@ Al igual que las matrices, podemos acceder a los datos de un *data frame* por no
 
 - **Acceso y manipulación de *data frames***: Se pueden cambiar los nombres de las columnas y filas con *`colnames()`* y *`rownames()`*, y obtener información sobre las dimensiones con *`dim()`*, *`nrow()`*, y *`ncol()`*.
 
-## Accediendo a Datos de los DataFrames
+### Accediendo a Datos de los DataFrames
 
 R proporciona múltiples formas de acceder a las columnas, filas, o subconjuntos de un *data frame*.
 
@@ -542,9 +531,11 @@ R ofrece una gran variedad de herramientas para visualizar datos. Aquí te mostr
 > plot(x = data$nitrato, y = data$peso, main = "Nitrato vs Peso", xlab = "Nitrato", ylab = "Peso", col = "blue", pch = 19)
 ```
 
+- **Gráficos en R**: El comando *`plot()`* crea un gráfico básico, donde podemos especificar los ejes *x* e *y*, el título del gráfico, las etiquetas y el color de los puntos. Esto es útil para explorar la relación entre variables.
+
 GRAFICANDO DATOS
 
-```R
+```r
 > plot(x=data$nitrato,   # Datos eje X
   y=data$longitud,       # Datos eje Y
   pch=19, cex=5,         # Forma y tamaño
@@ -557,7 +548,7 @@ GRAFICANDO DATOS
 
 GRAFICANDO DATOS CON **ggplot2**
 
-```R
+```r
 > library(ggplot2)       # Cargamos una librería de graficado
 > ggplot(data=data,      # Fuente de datos a graficar
   aes(x=nitrato,         # aes asigna variables a ejes, en este caso nitrato a x
@@ -567,7 +558,7 @@ GRAFICANDO DATOS CON **ggplot2**
 
 Comando completo:
 
-```R
+```r
 > ggplot(data=data, aes(x=nitrato, y=peso)) + 
   geom_line()
 ```
@@ -580,7 +571,7 @@ En estos casos, `>` indica que **R** se queda esperando a que indiquéis un par�
 
 GRAFICANDO DATOS CON FACTORES
 
-```R
+```r
 > condicion <- c('A', 'A', 'A', 'B', 'B', 'B')
 > data <- data.frame('nitrato' = nitrato, 
   'peso' = peso,
@@ -592,11 +583,11 @@ GRAFICANDO DATOS CON FACTORES
 
 Ahora tenemos un nuevo elemento en `aes`, **fill**, que permite dar color a las series. `geom_boxplot` nos genera un nuevo tipo de gráfico.
 
-FUNCIONES Y LIBRERÍAS
+## FUNCIONES Y LIBRERÍAS
 
 Las librerías son módulos que añaden funciones a **R** programadas por otras personas. De esta manera, cualquiera puede expandir las capacidades de la plataforma. Más adelante usaremos **igraph** para manipular redes.
 
-```R
+```r
 > res <- cor(data)    # Todos los comandos de R son funciones.
   # Se le da la información para trabajar (argumentos de entrada), en este caso data
   # La función devuelve el resultado (guardado en res)
@@ -607,9 +598,11 @@ Las librerías son módulos que añaden funciones a **R** programadas por otras 
 > centralize_vector(data$peso)            # Aplicamos la función
 ```
 
-LEYENDO ARCHIVOS
+## LEYENDO ARCHIVOS
 
-```R
+
+
+```r
 > net_data <- read.table('net', sep="\t")  # Leemos el archivo net
 > net_data
 > names(net_data) <- c('Gene', 'Organism')  # Con estas instrucciones, definimos los nombres de las columnas del dataframe
@@ -618,13 +611,12 @@ LEYENDO ARCHIVOS
 
 Con este código generamos un dataframe a partir del archivo ‘net’ que construimos al comienzo de esta sesión con el que vamos a hacer una sencilla práctica de redes.
 
-REDES BIOLÓGICAS  
+## REDES BIOLÓGICAS  
 • Son modelos para detectar relaciones entre elementos.  
 • Se componen de:  
   - **Nodos**: Entidades que son objeto de estudio.  
   - **Enlaces**: Conexiones existentes entre las entidades del modelo.  
 
-REDES BIOLÓGICAS  
 • Si los nodos son:  
   - **De un solo tipo**: La red se considera monopartita.  
   - **Más de un tipo**: N-partita, por ejemplo, bipartita, tripartita, etc.  
@@ -648,8 +640,9 @@ COMO SE DESCRIBEN LAS REDES NORMALMENTE
 | C | 1 | 1 | 0 | 0 |  
 | D | 1 | 1 | 0 | 0 |  
 
-CREANDO REDES EN R  
-```R
+### CREANDO REDES EN R
+
+```r
 > library(igraph) # Cargamos una librería de manejo de redes
 > net1 <- graph( edges=c(1,2, 2,3, 3,1), n=10 ) 
 # Definimos las conexiones (edges) como 1-2, 2-3 y 3-1 para una red de 10 nodos
@@ -659,23 +652,23 @@ CREANDO REDES EN R
 > plot(net2)
 ```
 
-CREANDO NUESTRA RED REAL  
-```R
+### CREANDO NUESTRA RED REAL  
+```r
 > real_net <- graph_from_data_frame(d=net_data) 
 # Transformamos el dataframe “net_data” en un contenedor de información especial de la librería igraph. Estos contenedores se llaman objetos.
 > plot(real_net)
 ```
 
-EXAMINANDO LOS COMPONENTES DE LA RED  
-```R
+### EXAMINANDO LOS COMPONENTES DE LA RED  
+```r
 > V(real_net) # Vemos los nodos
 > E(real_net) # Vemos las parejas
 > real_net[] # Vemos la matriz de adyacencia
 ```
 
-FORMAS DE VISUALIZAR UNA RED: **LAYOUTS**
+### FORMAS DE VISUALIZAR UNA RED: **LAYOUTS**
 
-```R
+```r
 > plot(real_net, layout=layout_randomly)
 > plot(real_net, layout=layout_on_sphere(real_net))
 > plot(real_net, layout=layout_in_circle(real_net))
@@ -683,4 +676,3 @@ FORMAS DE VISUALIZAR UNA RED: **LAYOUTS**
 ```
 
 Los **layouts** son formas de representar las redes. Explorando distintos layouts, la red adquiere distintas estructuras que permiten inferir conclusiones biológicas. En nuestro caso, podemos ver que las hexoquinasas son más frecuentes, cuáles son exclusivas de cierto tipo de organismos, o qué organismos presentan más diversidad de hexoquinasas.
-
