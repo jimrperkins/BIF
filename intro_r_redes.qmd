@@ -299,8 +299,8 @@ Acceder a elementos específicos de un vector en R es muy sencillo, y existen di
 [1] 1 2
 ```
 
-- **Acceso directo**: Usamos los índices entre corchetes `[]` para acceder a un elemento o a un subconjunto del vector.
-- **Acceso con vectores lógicos**: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.
+- **Acceso directo**: Usamos los índices entre corchetes `[]` para acceder a un elemento o a un subconjunto del vector.
+- **Acceso con vectores lógicos**: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.
 
 #### Formas avanzadas de obtener elementos de un vector
 
