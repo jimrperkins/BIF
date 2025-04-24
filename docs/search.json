@@ -2,41 +2,181 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "BIF",
+    "title": "Bioinformática y Tratamiento de Datos (BIF)",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "Prefacio\nEste libro ha sido creado como un recurso complementario para la asignatura Bioinformática y Tratamiento de Datos (BIF), que forma parte del Máster en Biotecnología Avanzada, impartido conjuntamente por la Universidad Internacional de Andalucía (UNIA) y la Universidad de Málaga.\nEl contenido del libro se organiza en ocho capítulos, cada uno de los cuales corresponde a uno de los ocho temas fundamentales que se imparten en la asignatura. Este material no pretende sustituir a las clases ni a las presentaciones, sino servir como complemento. En cada tema, encontrarás explicaciones adicionales, ejemplos prácticos y demostraciones con código que te ayudarán a comprender mejor los conceptos presentados en clase.\nEste recurso ha sido desarrollado con Quarto, una plataforma que permite integrar texto, código y resultados de manera fluida. Este formato favorece una experiencia de aprendizaje interactiva y reproducible, ayudando a conectar la teoría con la práctica en bioinformática.\nTe animamos a experimentar con los ejemplos, modificar el código y explorar los datos. La bioinformática se aprende haciendo, y esperamos que este libro te acompañe y te apoye en ese proceso.",
     "crumbs": [
-      "Preface"
+      "Prefacio"
     ]
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
+    "objectID": "intro_r_redes.html",
+    "href": "intro_r_redes.html",
+    "title": "2  Introducción a R y redes",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "2.1 Repaso: descargar archivos\nAntes de empezar con los análisis en R, repasaremos cómo obtener y preparar los datos. Aquí tienes los pasos esenciales para descargar y procesar un archivo desde UniProt utilizando la terminal.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
     ]
   },
   {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
+    "objectID": "intro_r_redes.html#repaso-descargar-archivos",
+    "href": "intro_r_redes.html#repaso-descargar-archivos",
+    "title": "2  Introducción a R y redes",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "text": "2.1.1 Crear carpeta de trabajo\nAbre tu terminal y ejecuta:\nmkdir redes\ncd redes\nEsto crea una nueva carpeta llamada redes y cambia el directorio de trabajo a ella. Así mantenemos todos los archivos organizados.\n\n\n2.1.2 Descargar archivo desde UniProt\nUtiliza wget para descargar información sobre hexoquinasas:\nwget 'https://rest.uniprot.org/uniprotkb/stream?query=hexokinase+AND+(reviewed:true)&format=tsv' -O hexokinase.tsv\n\n\n\n\n\n\n¿Qué hace este comando?\n\n\n\n\nConsulta UniProt por proteínas que contienen el término hexokinase y están revisadas (reviewed:true).\nDescarga los resultados en formato TSV (valores separados por tabulaciones).\nGuarda el archivo como hexokinase.tsv.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
     ]
   },
   {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "objectID": "intro_r_redes.html#crear-archivo-de-red-para-la-práctica",
+    "href": "intro_r_redes.html#crear-archivo-de-red-para-la-práctica",
+    "title": "2  Introducción a R y redes",
+    "section": "2.2 Crear archivo de red para la práctica",
+    "text": "2.2 Crear archivo de red para la práctica\nVamos a procesar ese archivo para obtener un archivo más sencillo que podremos usar para construir redes en R.\ngrep 'EC 2.7.1.1' hexokinase.tsv | cut -f 2,6 | tr '_' '    ' | cut -f 1,3 | cut -f 1,2 -d ' ' &gt; net\n\n\n\n\n\n\n¿Qué hace este comando complejo?\n\n\n\n\ngrep 'EC 2.7.1.1': selecciona solo las líneas con la enzima hexoquinasa (EC 2.7.1.1).\ncut -f 2,6: extrae las columnas 2 y 6 (identificador y organismo).\ntr '_' '\\t': reemplaza guiones bajos por tabulaciones.\ncut -f 1,3: selecciona las columnas resultantes (id de proteína y especie).\ncut -f 1,2 -d ' ': elimina cualquier texto adicional tras el segundo campo.\n&gt; net: guarda el resultado final en un archivo llamado net.\n\n\n\nEste archivo contendrá dos columnas: el identificador de proteína y la especie correspondiente. Es un formato simple que podemos usar como entrada en R para crear redes de relaciones entre proteínas y organismos.",
     "crumbs": [
-      "References"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#por-qué-hacemos-esto",
+    "href": "intro_r_redes.html#por-qué-hacemos-esto",
+    "title": "2  Introducción a R y redes",
+    "section": "2.3 ¿Por qué hacemos esto?",
+    "text": "2.3 ¿Por qué hacemos esto?\nLa idea es tener un conjunto de datos realista y sencillo que nos permita centrarnos en aprender R y cómo manejar estructuras de red.\nEn esta primera sesión trabajaremos con net, el archivo que acabamos de generar. En la próxima sesión añadiremos más datos, como un archivo de conteo, y aplicaremos técnicas estadísticas y visualización en R para completar el análisis.\n\n\n\n\n\n\n¿Sabías que…?\n\n\n\nEste pequeño archivo simula una red bipartita entre proteínas y organismos. Más adelante exploraremos cómo convertir este tipo de datos en grafos utilizando R.\n\n\nAhora que tenemos nuestro fichero listo, podemos empezar de mirar el analisis con R.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#qué-es-r",
+    "href": "intro_r_redes.html#qué-es-r",
+    "title": "2  Introducción a R y redes",
+    "section": "2.4 ¿Qué es R?",
+    "text": "2.4 ¿Qué es R?\nR es un lenguaje y entorno de programación orientado al análisis estadístico y la representación gráfica de datos. Desarrollado originalmente por Ross Ihaka y Robert Gentleman en la Universidad de Auckland, R ha evolucionado hasta convertirse en una herramienta esencial en campos como la bioinformática.\n\n2.4.1 Componentes principales de R\n\nTerminal propia: Permite la ejecución directa de comandos y scripts.\nLenguaje de programación: Ofrece estructuras y funciones para el desarrollo de algoritmos personalizados.\nGestor de ventanas gráficas: Facilita la creación y visualización de gráficos y representaciones visuales de datos.\n\n\n\n2.4.2 Iniciando la terminal de R\nPara comenzar a utilizar R:\n\nAbrir la terminal: Dependiendo de tu sistema operativo, accede a la terminal o consola.\nIniciar R: Escribe R y presiona Enter. Verás un prompt que indica que estás en el entorno de R.\nSalir de R: Para finalizar la sesión, escribe q() y confirma si deseas guardar el espacio de trabajo.\n\n&gt; R\n# Inicia la sesión de R\n\n&gt; q()\n# Sale de R\n# Save workspace image? [y/n/c]: n\nEn las terminales de sistemas Linux/bash, los comandos se ingresan en texto blanco sobre fondo negro. Al iniciar R, el fondo cambia a gris y el prompt cambia a &gt;, indicando que ahora estás en el entorno de R.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#aprendiendo-r-variables",
+    "href": "intro_r_redes.html#aprendiendo-r-variables",
+    "title": "2  Introducción a R y redes",
+    "section": "2.5 Aprendiendo R: Variables",
+    "text": "2.5 Aprendiendo R: Variables\nEn R, las variables son contenedores que almacenan datos. Se utilizan para guardar y manipular información durante el análisis.\n\n2.5.1 Creación y uso de variables\n&gt; texto &lt;- 'ejemplo'\n&gt; texto\n[1] \"ejemplo\"\n\n&gt; num &lt;- 7\n&gt; num\n[1] 7\n\n&gt; num_b &lt;- 2\n&gt; num / num_b\n[1] 3.5\n\nAsignación: Se utiliza el operador &lt;- para asignar valores a las variables.\nCadenas de texto: Se encierran entre comillas simples o dobles.\nOperaciones: R permite realizar operaciones matemáticas básicas con variables numéricas.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#trabajando-con-datos-valores-especiales-y-comparaciones",
+    "href": "intro_r_redes.html#trabajando-con-datos-valores-especiales-y-comparaciones",
+    "title": "2  Introducción a R y redes",
+    "section": "2.6 Trabajando con datos: Valores especiales y comparaciones",
+    "text": "2.6 Trabajando con datos: Valores especiales y comparaciones\nR maneja valores especiales que representan datos faltantes o indefinidos.\n\n2.6.1 Valores especiales\n&gt; 5 + NA\n[1] NA\n\n&gt; is.na(5 + NA)\n[1] TRUE\n\n&gt; 10 + NULL\n[1] NULL\n\n&gt; is.null(NULL)\n[1] TRUE\n\nNA: Representa un valor faltante o no disponible.\nNULL: Indica que un objeto no contiene información.\n\n\n\n2.6.2 Comparaciones\n&gt; 2 == 2\n[1] TRUE\n\n&gt; 2 != 2\n[1] FALSE\n\n&gt; 2 &lt;= 3\n[1] TRUE\n\n==: Verifica igualdad.\n!=: Verifica diferencia.\n&lt;=: Verifica menor o igual.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#aprendiendo-r-variables-compuestas",
+    "href": "intro_r_redes.html#aprendiendo-r-variables-compuestas",
+    "title": "2  Introducción a R y redes",
+    "section": "2.7 Aprendiendo R: Variables compuestas",
+    "text": "2.7 Aprendiendo R: Variables compuestas\nR permite trabajar con estructuras de datos más complejas, como los vectores, que son secuencias de elementos del mismo tipo.\n\n2.7.1 Creación y acceso a vectores\n&gt; texto &lt;- c('ab', 'cd', 'ef')\n&gt; texto\n[1] \"ab\" \"cd\" \"ef\"\n\n&gt; texto[2]\n[1] \"cd\"\n\n&gt; num &lt;- c(3, 5, 7)\n&gt; num\n[1] 3 5 7\n\n&gt; num[1]\n[1] 3\n\n&gt; num / 2\n[1] 1.5 2.5 3.5\n\nCreación: Se utiliza la función c() para combinar elementos en un vector.\nAcceso: Se accede a los elementos mediante corchetes [] y especificando la posición.\nOperaciones: Las operaciones matemáticas se aplican a cada elemento del vector.\n\n\n\n2.7.2 Creación avanzada de vectores\n&gt; v &lt;- 1:7\n&gt; v\n[1] 1 2 3 4 5 6 7\n\n&gt; v &lt;- rep(2, 23)\n&gt; v\n[1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2\n\n&gt; v &lt;- rep(1:3, times = 2)\n&gt; v\n[1] 1 2 3 1 2 3\n\n&gt; v &lt;- rep(1:10, each = 2)\n&gt; v\n[1] 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10\n\n&gt; v &lt;- seq(10, 20, 2)\n&gt; v\n[1] 10 12 14 16 18 20\n\nSecuencias: 1:7 genera una secuencia de 1 a 7.\nRepeticiones: rep() repite elementos según lo especificado.\nSecuencias con paso: seq() genera secuencias con un intervalo definido.\n\n\n\n2.7.3 Operaciones con Vectores\nLos vectores en R permiten realizar operaciones entre elementos de manera eficiente y fácil. Vamos a ver algunos ejemplos prácticos:\n\n2.7.3.1 Sumar y multiplicar vectores\n&gt; v1 &lt;- 1:5\n&gt; v2 &lt;- rep(1, 5)\n&gt; v1 + v2 # Suma de dos vectores\n[1] 2 3 4 5 6\n\n&gt; v1 + 1 # Sumar 1 a cada elemento del vector\n[1] 2 3 4 5 6\n\n&gt; v1 * 2 # Multiplicar cada elemento del vector por 2\n[1] 2 4 6 8 10\n\nOperaciones element-wise: Cuando realizamos operaciones entre vectores o entre un vector y un valor escalar, R realiza la operación de manera elemento a elemento.\nError de tamaños: Si intentamos operar vectores de diferentes tamaños, como en el siguiente ejemplo, se genera un error. Esto ocurre porque R no sabe cómo emparejar los elementos de los vectores.\n\n&gt; v1 + c(1,7)\nError in v1 + c(1, 7) : \n  longer object length is not a multiple of shorter object length\n\n\n2.7.3.2 Operaciones lógicas con vectores\nLos vectores también pueden ser usados en operaciones lógicas, que devuelven un vector de valores lógicos (TRUE o FALSE).\n&gt; v1 &gt; 2 # Compara cada elemento con 2\n[1] FALSE FALSE TRUE TRUE TRUE\n\n&gt; v1 == v2 # Verifica si los elementos de v1 son iguales a los de v2\n[1] FALSE TRUE FALSE TRUE FALSE\n\n&gt; v1 != v2 # Verifica si los elementos de v1 son diferentes a los de v2\n[1] TRUE FALSE TRUE FALSE TRUE\n\nOperadores lógicos:\n\n|: Operador OR, devuelve un vector de valores lógicos para cada comparación.\n&: Operador AND, devuelve un vector de valores lógicos.\n|| y &&: Versiones de OR y AND, pero devuelven un solo valor lógico en lugar de un vector. Estos operadores se utilizan para comparar solo el primer elemento de cada vector.\n\n\n&gt; (v1 &gt; 2) | (v2 &gt; 0) # Realiza OR lógico entre los vectores\n[1] TRUE TRUE TRUE TRUE TRUE\n\n&gt; (v1 &gt; 2) & (v2 &gt; 0) # Realiza AND lógico entre los vectores\n[1] FALSE TRUE FALSE TRUE FALSE\n\n&gt; (v1 &gt; 2) || (v2 &gt; 0) # OR lógico entre solo el primer elemento de cada vector\n[1] TRUE\n\n&gt; (v1 &gt; 2) && (v2 &gt; 0) # AND lógico entre solo el primer elemento de cada vector\n[1] FALSE\n\n\n2.7.3.3 Formas de obtener elementos de un vector\nAcceder a elementos específicos de un vector en R es muy sencillo, y existen diferentes formas de hacerlo:\n&gt; v1[3] # Accede al tercer elemento del vector\n[1] 3\n\n&gt; v1[2:4] # Accede a los elementos de las posiciones 2 a 4\n[1] 2 3 4\n\n&gt; v1[c(1,3)] # Accede a los elementos en las posiciones 1 y 3\n[1] 1 3\n\n&gt; v1[c(TRUE, TRUE, FALSE, FALSE, FALSE)] # Usamos un vector lógico para acceder a elementos\n[1] 1 2\n\nAcceso directo: Usamos los índices entre corchetes [] para acceder a un elemento o a un subconjunto del vector.\nAcceso con vectores lógicos: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.\n\n\n\n2.7.3.4 Formas avanzadas de obtener elementos de un vector\nR ofrece métodos más avanzados para acceder a elementos en vectores. Aquí te mostramos algunos de ellos:\n&gt; z &lt;- c(3, 6, 2, 2, 1, 0, 6)\n&gt; which(z &gt; 3) # Devuelve las posiciones que cumplen la condición\n[1] 2 7\n\n&gt; z[which(z &gt; 3)] # Usamos las posiciones para extraer los elementos\n[1] 6 6\n\n&gt; w &lt;- c(2, 3)\n&gt; match(w, z) # Encuentra las posiciones de los elementos de w en z\n[1] 3 1\n\n&gt; z[match(w, z)] # Extrae los elementos de z que coinciden con w\n[1] 2 3\n\nwhich(): Devuelve los índices de los elementos que cumplen una condición lógica (por ejemplo, z &gt; 3).\nmatch(): Devuelve los índices de las posiciones de los elementos de un vector en otro.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#aplicaciones-en-bioinformática",
+    "href": "intro_r_redes.html#aplicaciones-en-bioinformática",
+    "title": "2  Introducción a R y redes",
+    "section": "2.8 Aplicaciones en Bioinformática",
+    "text": "2.8 Aplicaciones en Bioinformática\nEn bioinformática, la manipulación de vectores y matrices es esencial para manejar grandes cantidades de datos, como secuencias genómicas o interacciones proteína-proteína. Por ejemplo, podemos usar vectores para almacenar información sobre expresiones génicas y realizar operaciones de análisis, como comparar los valores de expresión en diferentes condiciones experimentales o identificar genes diferencialmente expresados.\nEjemplo: Comparar la expresión génica en dos condiciones diferentes.\n# Expresión génica en dos condiciones\nexpr_condition_1 &lt;- c(5, 8, 3, 10, 6)\nexpr_condition_2 &lt;- c(4, 7, 2, 9, 5)\n\n# Identificar genes cuya expresión es mayor en la condición 1\nexpr_condition_1 &gt; expr_condition_2\n[1]  TRUE  TRUE  TRUE FALSE  TRUE\nAquí, estamos comparando los niveles de expresión génica entre dos condiciones, y el resultado nos indica qué genes tienen una mayor expresión en la primera condición. Esto es solo un ejemplo sencillo de cómo las operaciones con vectores pueden ser aplicadas en el análisis de datos biológicos.\n\n2.8.1 Funciones sobre Vectores\nEn R, las funciones aplicadas a vectores nos permiten obtener estadísticas y realizar análisis rápidamente sobre los datos. Aquí algunos ejemplos útiles:\n&gt; num &lt;- c(3, 5, 7, 2, 4, 9)\n\n&gt; length(num) # Devuelve la longitud del vector\n[1] 6\n\n&gt; sum(num) # Suma de todos los elementos del vector\n[1] 30\n\n&gt; mean(num) # Media de los elementos del vector\n[1] 5\n\n&gt; max(num) # Valor máximo en el vector\n[1] 9\n\n&gt; sd(num) # Desviación estándar del vector\n[1] 2.582\n\nFunciones estadísticas: Estas funciones proporcionan información clave sobre la distribución de los datos en el vector.\nR está orientado al cálculo y la estadística, por lo que tiene potentes funciones para analizar conjuntos de datos de manera eficiente.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#evolución-del-vector-la-matriz",
+    "href": "intro_r_redes.html#evolución-del-vector-la-matriz",
+    "title": "2  Introducción a R y redes",
+    "section": "2.9 Evolución del Vector: La Matriz",
+    "text": "2.9 Evolución del Vector: La Matriz\nUna matriz es similar a un vector, pero tiene dos dimensiones: filas y columnas. Es útil para representar datos más complejos, como matrices de interacción entre genes y muestras.\n&gt; m &lt;- matrix(data = 1, nrow = 5, ncol = 4) # Crear una matriz 5x4 con todos los valores iguales a 1\n&gt; m &lt;- matrix(1, 5, 4) # Forma abreviada\n&gt; dim(m) # Devuelve las dimensiones de la matriz\n[1] 5 4\n\n&gt; m &lt;- matrix(1:10, 10, 10) # Usamos un vector para rellenar la matriz\n&gt; t(m) # Transpone la matriz, intercambiando filas por columnas\n\nDimensiones de la matriz: Las matrices tienen dos dimensiones, lo que permite representar diferentes aspectos de los datos (como genes y muestras en un estudio).\nOperaciones en matrices: Solo puede contener un tipo de dato (generalmente numérico).\n\n\n2.9.1 Cómo Acceder a los Datos de una Matriz\nLas matrices tienen una estructura bidimensional, lo que permite acceder a sus elementos de varias maneras, ya sea por filas, columnas o índices específicos.\n&gt; m[2,3] # Accedemos a un solo elemento en la fila 2, columna 3\n[1] 2\n\n&gt; m[2,] # Extraemos toda la fila 2\n[1] 2 4 6 8 10\n\n&gt; m[,2] # Extraemos toda la columna 2\n[1] 2 4 6 8 10\n\n&gt; m[-1,] # Extraemos todas las filas, excepto la primera\n[1] 4 6 8 10\n\nAcceso a elementos: Se puede acceder a un único elemento usando la notación m[fila, columna], o a filas y columnas completas usando m[fila,] y m[,columna].\nOperaciones sobre matrices: Al igual que con los vectores, se pueden realizar operaciones sobre las matrices, como comparar elementos o extraer subconjuntos con operaciones lógicas.\n\n&gt; m[1:2,4:6] # Extraemos un subgrupo de filas y columnas\n[1] 1 2 3 4\n\n&gt; m[1,] == m[,1] # Comparar una fila con una columna\n[1] TRUE TRUE TRUE TRUE TRUE\n\n&gt; m &gt; 3 # Genera una matriz de valores TRUE/FALSE\n[1] FALSE TRUE TRUE TRUE TRUE\n\n&gt; m[m &gt; 3] # Seleccionamos los elementos que son mayores a 3\n[1] 4 6 8 10",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#el-cajón-de-sastre-la-lista",
+    "href": "intro_r_redes.html#el-cajón-de-sastre-la-lista",
+    "title": "2  Introducción a R y redes",
+    "section": "2.10 El Cajón de Sastre: La Lista",
+    "text": "2.10 El Cajón de Sastre: La Lista\nLas listas en R permiten almacenar objetos heterogéneos, es decir, objetos de diferentes tipos de datos. Se pueden asignar nombres a los elementos de la lista para facilitar el acceso.\n&gt; a1 &lt;- list(boo = v1, foo = v2, zoo = \"Hola\") # Creamos una lista con diferentes tipos de objetos\n&gt; a1[\"boo\"] # Accedemos al objeto con nombre 'boo' dentro de la lista\n$boo\n[1] 1 2 3 4 5\n\n&gt; a1[[\"boo\"]] # Extraemos el objeto original sin la lista\n[1] 1 2 3 4 5\n\n&gt; a1$boo # Equivalente al anterior\n[1] 1 2 3 4 5\n\n&gt; a1[[1]] # Accedemos a la primer entrada de la lista\n[1] 1 2 3 4 5\n\n&gt; a1$Something &lt;- \"A thing\" # Añadimos un nuevo elemento a la lista\n&gt; a1[[\"algo\"]] &lt;- rep(2, 10) # Añadimos otro nuevo elemento\n\nListas en R: Las listas permiten almacenar diferentes tipos de datos dentro de un mismo objeto, como vectores, matrices, o incluso otras listas.\nAcceso a elementos: Se puede acceder a los elementos de una lista por nombre (a1$boo), por índice (a1[[1]]), o por nombre de clave dentro de la lista (a1[[\"boo\"]]).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#organizando-datos-dataframes",
+    "href": "intro_r_redes.html#organizando-datos-dataframes",
+    "title": "2  Introducción a R y redes",
+    "section": "2.11 Organizando Datos: DataFrames",
+    "text": "2.11 Organizando Datos: DataFrames\nUn data frame es una estructura muy usada en R para almacenar y organizar datos tabulares, como una hoja de cálculo. Cada columna puede contener diferentes tipos de datos.\n&gt; nitrato &lt;- c(3, 5, 7, 2, 4, 9)\n&gt; peso &lt;- c(5, 7, 9, 4, 6, 11)\n&gt; longitud &lt;- c(1, 2, 3, 2, 1, 4)\n&gt; data &lt;- data.frame('nitrato' = nitrato, 'peso' = peso, 'longitud' = longitud)\n\n&gt; summary(data) # Resumen estadístico de cada columna\n  nitrato         peso         longitud  \n Min.   :2.000   Min.   :4.00   Min.   :1.0  \n 1st Qu.:3.000   1st Qu.:5.50   1st Qu.:1.5  \n Median :4.500   Median :6.00   Median :2.0  \n Mean   :5.000   Mean   :7.00   Mean   :2.2  \n 3rd Qu.:7.000   3rd Qu.:8.00   3rd Qu.:3.0  \n Max.   :9.000   Max.   :11.00   Max.   :4.0  \n\n&gt; cor(data) # Calcula las correlaciones entre las columnas\n           nitrato    peso   longitud\nnitrato   1.0000000 0.98104 0.90717\npeso      0.9810436 1.00000 0.90535\nlongitud  0.9071734 0.90535 1.00000\n\nDataframes: Permiten organizar datos de manera estructurada y realizar análisis fácilmente.\nFunciones útiles: summary() ofrece estadísticas descriptivas y cor() calcula las correlaciones entre las variables.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#consultando-datos-de-los-dataframes",
+    "href": "intro_r_redes.html#consultando-datos-de-los-dataframes",
+    "title": "2  Introducción a R y redes",
+    "section": "2.12 Consultando Datos de los DataFrames",
+    "text": "2.12 Consultando Datos de los DataFrames\nAl igual que las matrices, podemos acceder a los datos de un data frame por nombre de columna, o utilizando índices.\n&gt; colnames(data) # Devuelve los nombres de las columnas\n[1] \"nitrato\"  \"peso\"     \"longitud\"\n\n&gt; rownames(data) # Devuelve los nombres de las filas\n[1] \"1\" \"2\" \"3\" \"4\" \"5\" \"6\"\n\n&gt; dim(data) # Devuelve las dimensiones del data frame\n[1] 6 3\n\n&gt; nrow(data) # Devuelve solo el número de filas\n[1] 6\n\n&gt; ncol(data) # Devuelve solo el número de columnas\n[1] 3\n\nAcceso y manipulación de data frames: Se pueden cambiar los nombres de las columnas y filas con colnames() y rownames(), y obtener información sobre las dimensiones con dim(), nrow(), y ncol().\n\n\n2.12.1 Accediendo a Datos de los DataFrames\nR proporciona múltiples formas de acceder a las columnas, filas, o subconjuntos de un data frame.\n&gt; data$nitrato # Accedemos a la columna nitrato\n[1] 3 5 7 2 4 9\n\n&gt; data[1,] # Accedemos a la primera fila\n[1] 3 5 1\n\n&gt; data[,1] # Accedemos a la primera columna\n[1] 3 5 7 2 4 9\n\n&gt; data[1:2,2:3] # Extraemos las primeras dos filas y las columnas 2 y 3\n[1] 5 7 2 3\n\n&gt; data[c(1,3),] # Extraemos las filas 1 y 3\n[1] 3 5 1\n\nAcceso con índices: Se puede acceder a filas y columnas de la misma manera que con matrices, utilizando índices numéricos o vectores lógicos.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#graficando-datos",
+    "href": "intro_r_redes.html#graficando-datos",
+    "title": "2  Introducción a R y redes",
+    "section": "2.13 Graficando Datos",
+    "text": "2.13 Graficando Datos\nR ofrece una gran variedad de herramientas para visualizar datos. Aquí te mostramos cómo empezar con gráficos simples:\n&gt; plot(x = data$nitrato, y = data$peso, main = \"Nitrato vs Peso\", xlab = \"Nitrato\", ylab = \"Peso\", col = \"blue\", pch = 19)\n\nGráficos en R: El comando plot() crea un gráfico básico, donde podemos especificar los ejes x e y, el título del gráfico, las etiquetas y el color de los puntos. Esto es útil para explorar la relación entre variables.\n\nGRAFICANDO DATOS\n&gt; plot(x=data$nitrato,   # Datos eje X\n  y=data$longitud,       # Datos eje Y\n  pch=19, cex=5,         # Forma y tamaño\n  col=\"dark red\")        # Color\n&gt; plot(x=data$nitrato,\n  y=data$peso,\n  pch=19, cex=5,\n  col=\"dark red\")\nGRAFICANDO DATOS CON ggplot2\n&gt; library(ggplot2)       # Cargamos una librería de graficado\n&gt; ggplot(data=data,      # Fuente de datos a graficar\n  aes(x=nitrato,         # aes asigna variables a ejes, en este caso nitrato a x\n  y=peso)) +            # peso a y, el + indica que hay que añadir un elemento gráfico\n  geom_line()            # Definimos tipo de gráfica\nComando completo:\n&gt; ggplot(data=data, aes(x=nitrato, y=peso)) + \n  geom_line()\nLas librerías son módulos que añaden funciones a R programadas por otras personas. De esta manera, cualquiera puede expandir las capacidades de la plataforma.\nPrueba con nitrato/longitud y usar geom_point() en vez de geom_line().\nEn estos casos, &gt; indica que R se queda esperando a que indiquéis un parámetro adicional a la orden anterior. Os aparecerá como un +.\nGRAFICANDO DATOS CON FACTORES\n&gt; condicion &lt;- c('A', 'A', 'A', 'B', 'B', 'B')\n&gt; data &lt;- data.frame('nitrato' = nitrato, \n  'peso' = peso,\n  'longitud' = longitud,\n  'condición' = condicion)\n&gt; ggplot(data, aes(x=condicion, y=nitrato, fill=condicion)) +\n  geom_boxplot()\nAhora tenemos un nuevo elemento en aes, fill, que permite dar color a las series. geom_boxplot nos genera un nuevo tipo de gráfico.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#funciones-y-librerías",
+    "href": "intro_r_redes.html#funciones-y-librerías",
+    "title": "2  Introducción a R y redes",
+    "section": "2.14 FUNCIONES Y LIBRERÍAS",
+    "text": "2.14 FUNCIONES Y LIBRERÍAS\nLas librerías son módulos que añaden funciones a R programadas por otras personas. De esta manera, cualquiera puede expandir las capacidades de la plataforma. Más adelante usaremos igraph para manipular redes.\n&gt; res &lt;- cor(data)    # Todos los comandos de R son funciones.\n  # Se le da la información para trabajar (argumentos de entrada), en este caso data\n  # La función devuelve el resultado (guardado en res)\n&gt; centralize_vector &lt;- function(vector){   # function permite crear funciones\n  new_vector &lt;- vector - mean(vector)     # Entre {} indicamos los pasos\n  return(new_vector)                      # return entrega los resultados que consideramos relevantes\n}\n&gt; centralize_vector(data$peso)            # Aplicamos la función",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#leyendo-archivos",
+    "href": "intro_r_redes.html#leyendo-archivos",
+    "title": "2  Introducción a R y redes",
+    "section": "2.15 LEYENDO ARCHIVOS",
+    "text": "2.15 LEYENDO ARCHIVOS\n&gt; net_data &lt;- read.table('net', sep=\"\\t\")  # Leemos el archivo net\n&gt; net_data\n&gt; names(net_data) &lt;- c('Gene', 'Organism')  # Con estas instrucciones, definimos los nombres de las columnas del dataframe\n&gt; net_data\nCon este código generamos un dataframe a partir del archivo ‘net’ que construimos al comienzo de esta sesión con el que vamos a hacer una sencilla práctica de redes.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
+    ]
+  },
+  {
+    "objectID": "intro_r_redes.html#redes-biológicas",
+    "href": "intro_r_redes.html#redes-biológicas",
+    "title": "2  Introducción a R y redes",
+    "section": "2.16 REDES BIOLÓGICAS",
+    "text": "2.16 REDES BIOLÓGICAS\n• Son modelos para detectar relaciones entre elementos.\n• Se componen de:\n- Nodos: Entidades que son objeto de estudio.\n- Enlaces: Conexiones existentes entre las entidades del modelo.\n• Si los nodos son:\n- De un solo tipo: La red se considera monopartita.\n- Más de un tipo: N-partita, por ejemplo, bipartita, tripartita, etc.\n• Si los enlaces son:\n- Binarios: Representan únicamente la existencia o ausencia de relaciones.\n- Ponderados: Reflejan la probabilidad o la magnitud de la conexión.\nCOMO SE DESCRIBEN LAS REDES NORMALMENTE\nPAREJAS\n- C – B\n- C – A\n- B – D\n- A – D\nMATRICES DE ADYACENCIA\n\n\n\n\nA\nB\nC\nD\n\n\n\n\nA\n0\n0\n1\n1\n\n\nB\n0\n0\n1\n1\n\n\nC\n1\n1\n0\n0\n\n\nD\n1\n1\n0\n0\n\n\n\n\n2.16.1 CREANDO REDES EN R\n&gt; library(igraph) # Cargamos una librería de manejo de redes\n&gt; net1 &lt;- graph( edges=c(1,2, 2,3, 3,1), n=10 ) \n# Definimos las conexiones (edges) como 1-2, 2-3 y 3-1 para una red de 10 nodos\n&gt; plot(net1) # Graficamos la red\n&gt; net2 &lt;- graph( c(\"John\", \"Jim\", \"Jim\", \"Jill\", \"Jill\", \"John\"))\n# En este caso, al definir las conexiones, se sobreentiende la creación de los nodos personas.\n&gt; plot(net2)\n\n\n2.16.2 CREANDO NUESTRA RED REAL\n&gt; real_net &lt;- graph_from_data_frame(d=net_data) \n# Transformamos el dataframe “net_data” en un contenedor de información especial de la librería igraph. Estos contenedores se llaman objetos.\n&gt; plot(real_net)\n\n\n2.16.3 EXAMINANDO LOS COMPONENTES DE LA RED\n&gt; V(real_net) # Vemos los nodos\n&gt; E(real_net) # Vemos las parejas\n&gt; real_net[] # Vemos la matriz de adyacencia\n\n\n2.16.4 FORMAS DE VISUALIZAR UNA RED: LAYOUTS\n&gt; plot(real_net, layout=layout_randomly)\n&gt; plot(real_net, layout=layout_on_sphere(real_net))\n&gt; plot(real_net, layout=layout_in_circle(real_net))\n&gt; plot(real_net, layout=layout_with_kk(real_net))\nLos layouts son formas de representar las redes. Explorando distintos layouts, la red adquiere distintas estructuras que permiten inferir conclusiones biológicas. En nuestro caso, podemos ver que las hexoquinasas son más frecuentes, cuáles son exclusivas de cierto tipo de organismos, o qué organismos presentan más diversidad de hexoquinasas.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R y redes</span>"
     ]
   }
 ]

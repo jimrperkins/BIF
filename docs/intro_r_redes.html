@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Introducción a R y redes – Bioinformática y Tratamiento de Datos (BIF)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./seq_genomica.html" rel="next">
+<link href="./intro_computacion.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_r_redes.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R y redes</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioinformática y Tratamiento de Datos (BIF)</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Bioinformática-y-Tratamiento-de-Datos--BIF-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_computacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a la terminal de Linux</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_r_redes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R y redes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seq_genomica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Secuenciación y genómica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./redes_teoria_grafos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Redes Biológicas y Teoría de Grafos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biología_sintetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Biología Sintética</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#repaso-descargar-archivos" id="toc-repaso-descargar-archivos" class="nav-link active" data-scroll-target="#repaso-descargar-archivos"><span class="header-section-number">2.1</span> Repaso: descargar archivos</a>
+  <ul class="collapse">
+  <li><a href="#crear-carpeta-de-trabajo" id="toc-crear-carpeta-de-trabajo" class="nav-link" data-scroll-target="#crear-carpeta-de-trabajo"><span class="header-section-number">2.1.1</span> Crear carpeta de trabajo</a></li>
+  <li><a href="#descargar-archivo-desde-uniprot" id="toc-descargar-archivo-desde-uniprot" class="nav-link" data-scroll-target="#descargar-archivo-desde-uniprot"><span class="header-section-number">2.1.2</span> Descargar archivo desde UniProt</a></li>
+  </ul></li>
+  <li><a href="#crear-archivo-de-red-para-la-práctica" id="toc-crear-archivo-de-red-para-la-práctica" class="nav-link" data-scroll-target="#crear-archivo-de-red-para-la-práctica"><span class="header-section-number">2.2</span> Crear archivo de red para la práctica</a></li>
+  <li><a href="#por-qué-hacemos-esto" id="toc-por-qué-hacemos-esto" class="nav-link" data-scroll-target="#por-qué-hacemos-esto"><span class="header-section-number">2.3</span> ¿Por qué hacemos esto?</a></li>
+  <li><a href="#qué-es-r" id="toc-qué-es-r" class="nav-link" data-scroll-target="#qué-es-r"><span class="header-section-number">2.4</span> ¿Qué es R?</a>
+  <ul class="collapse">
+  <li><a href="#componentes-principales-de-r" id="toc-componentes-principales-de-r" class="nav-link" data-scroll-target="#componentes-principales-de-r"><span class="header-section-number">2.4.1</span> Componentes principales de R</a></li>
+  <li><a href="#iniciando-la-terminal-de-r" id="toc-iniciando-la-terminal-de-r" class="nav-link" data-scroll-target="#iniciando-la-terminal-de-r"><span class="header-section-number">2.4.2</span> Iniciando la terminal de R</a></li>
+  </ul></li>
+  <li><a href="#aprendiendo-r-variables" id="toc-aprendiendo-r-variables" class="nav-link" data-scroll-target="#aprendiendo-r-variables"><span class="header-section-number">2.5</span> Aprendiendo R: Variables</a>
+  <ul class="collapse">
+  <li><a href="#creación-y-uso-de-variables" id="toc-creación-y-uso-de-variables" class="nav-link" data-scroll-target="#creación-y-uso-de-variables"><span class="header-section-number">2.5.1</span> Creación y uso de variables</a></li>
+  </ul></li>
+  <li><a href="#trabajando-con-datos-valores-especiales-y-comparaciones" id="toc-trabajando-con-datos-valores-especiales-y-comparaciones" class="nav-link" data-scroll-target="#trabajando-con-datos-valores-especiales-y-comparaciones"><span class="header-section-number">2.6</span> Trabajando con datos: Valores especiales y comparaciones</a>
+  <ul class="collapse">
+  <li><a href="#valores-especiales" id="toc-valores-especiales" class="nav-link" data-scroll-target="#valores-especiales"><span class="header-section-number">2.6.1</span> Valores especiales</a></li>
+  <li><a href="#comparaciones" id="toc-comparaciones" class="nav-link" data-scroll-target="#comparaciones"><span class="header-section-number">2.6.2</span> Comparaciones</a></li>
+  </ul></li>
+  <li><a href="#aprendiendo-r-variables-compuestas" id="toc-aprendiendo-r-variables-compuestas" class="nav-link" data-scroll-target="#aprendiendo-r-variables-compuestas"><span class="header-section-number">2.7</span> Aprendiendo R: Variables compuestas</a>
+  <ul class="collapse">
+  <li><a href="#creación-y-acceso-a-vectores" id="toc-creación-y-acceso-a-vectores" class="nav-link" data-scroll-target="#creación-y-acceso-a-vectores"><span class="header-section-number">2.7.1</span> Creación y acceso a vectores</a></li>
+  <li><a href="#creación-avanzada-de-vectores" id="toc-creación-avanzada-de-vectores" class="nav-link" data-scroll-target="#creación-avanzada-de-vectores"><span class="header-section-number">2.7.2</span> Creación avanzada de vectores</a></li>
+  <li><a href="#operaciones-con-vectores" id="toc-operaciones-con-vectores" class="nav-link" data-scroll-target="#operaciones-con-vectores"><span class="header-section-number">2.7.3</span> Operaciones con Vectores</a></li>
+  </ul></li>
+  <li><a href="#aplicaciones-en-bioinformática" id="toc-aplicaciones-en-bioinformática" class="nav-link" data-scroll-target="#aplicaciones-en-bioinformática"><span class="header-section-number">2.8</span> Aplicaciones en Bioinformática</a>
+  <ul class="collapse">
+  <li><a href="#funciones-sobre-vectores" id="toc-funciones-sobre-vectores" class="nav-link" data-scroll-target="#funciones-sobre-vectores"><span class="header-section-number">2.8.1</span> Funciones sobre Vectores</a></li>
+  </ul></li>
+  <li><a href="#evolución-del-vector-la-matriz" id="toc-evolución-del-vector-la-matriz" class="nav-link" data-scroll-target="#evolución-del-vector-la-matriz"><span class="header-section-number">2.9</span> Evolución del Vector: La Matriz</a>
+  <ul class="collapse">
+  <li><a href="#cómo-acceder-a-los-datos-de-una-matriz" id="toc-cómo-acceder-a-los-datos-de-una-matriz" class="nav-link" data-scroll-target="#cómo-acceder-a-los-datos-de-una-matriz"><span class="header-section-number">2.9.1</span> Cómo Acceder a los Datos de una Matriz</a></li>
+  </ul></li>
+  <li><a href="#el-cajón-de-sastre-la-lista" id="toc-el-cajón-de-sastre-la-lista" class="nav-link" data-scroll-target="#el-cajón-de-sastre-la-lista"><span class="header-section-number">2.10</span> El Cajón de Sastre: La Lista</a></li>
+  <li><a href="#organizando-datos-dataframes" id="toc-organizando-datos-dataframes" class="nav-link" data-scroll-target="#organizando-datos-dataframes"><span class="header-section-number">2.11</span> Organizando Datos: DataFrames</a></li>
+  <li><a href="#consultando-datos-de-los-dataframes" id="toc-consultando-datos-de-los-dataframes" class="nav-link" data-scroll-target="#consultando-datos-de-los-dataframes"><span class="header-section-number">2.12</span> Consultando Datos de los DataFrames</a>
+  <ul class="collapse">
+  <li><a href="#accediendo-a-datos-de-los-dataframes" id="toc-accediendo-a-datos-de-los-dataframes" class="nav-link" data-scroll-target="#accediendo-a-datos-de-los-dataframes"><span class="header-section-number">2.12.1</span> Accediendo a Datos de los DataFrames</a></li>
+  </ul></li>
+  <li><a href="#graficando-datos" id="toc-graficando-datos" class="nav-link" data-scroll-target="#graficando-datos"><span class="header-section-number">2.13</span> Graficando Datos</a></li>
+  <li><a href="#funciones-y-librerías" id="toc-funciones-y-librerías" class="nav-link" data-scroll-target="#funciones-y-librerías"><span class="header-section-number">2.14</span> FUNCIONES Y LIBRERÍAS</a></li>
+  <li><a href="#leyendo-archivos" id="toc-leyendo-archivos" class="nav-link" data-scroll-target="#leyendo-archivos"><span class="header-section-number">2.15</span> LEYENDO ARCHIVOS</a></li>
+  <li><a href="#redes-biológicas" id="toc-redes-biológicas" class="nav-link" data-scroll-target="#redes-biológicas"><span class="header-section-number">2.16</span> REDES BIOLÓGICAS</a>
+  <ul class="collapse">
+  <li><a href="#creando-redes-en-r" id="toc-creando-redes-en-r" class="nav-link" data-scroll-target="#creando-redes-en-r"><span class="header-section-number">2.16.1</span> CREANDO REDES EN R</a></li>
+  <li><a href="#creando-nuestra-red-real" id="toc-creando-nuestra-red-real" class="nav-link" data-scroll-target="#creando-nuestra-red-real"><span class="header-section-number">2.16.2</span> CREANDO NUESTRA RED REAL</a></li>
+  <li><a href="#examinando-los-componentes-de-la-red" id="toc-examinando-los-componentes-de-la-red" class="nav-link" data-scroll-target="#examinando-los-componentes-de-la-red"><span class="header-section-number">2.16.3</span> EXAMINANDO LOS COMPONENTES DE LA RED</a></li>
+  <li><a href="#formas-de-visualizar-una-red-layouts" id="toc-formas-de-visualizar-una-red-layouts" class="nav-link" data-scroll-target="#formas-de-visualizar-una-red-layouts"><span class="header-section-number">2.16.4</span> FORMAS DE VISUALIZAR UNA RED: <strong>LAYOUTS</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R y redes</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="repaso-descargar-archivos" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="repaso-descargar-archivos"><span class="header-section-number">2.1</span> Repaso: descargar archivos</h2>
+<p>Antes de empezar con los análisis en R, repasaremos cómo obtener y preparar los datos. Aquí tienes los pasos esenciales para descargar y procesar un archivo desde UniProt utilizando la terminal.</p>
+<section id="crear-carpeta-de-trabajo" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="crear-carpeta-de-trabajo"><span class="header-section-number">2.1.1</span> Crear carpeta de trabajo</h3>
+<p>Abre tu terminal y ejecuta:</p>
+<pre><code>mkdir redes
+cd redes</code></pre>
+<p>Esto crea una nueva carpeta llamada <code>redes</code> y cambia el directorio de trabajo a ella. Así mantenemos todos los archivos organizados.</p>
+</section>
+<section id="descargar-archivo-desde-uniprot" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="descargar-archivo-desde-uniprot"><span class="header-section-number">2.1.2</span> Descargar archivo desde UniProt</h3>
+<p>Utiliza <code>wget</code> para descargar información sobre hexoquinasas:</p>
+<pre><code>wget 'https://rest.uniprot.org/uniprotkb/stream?query=hexokinase+AND+(reviewed:true)&amp;format=tsv' -O hexokinase.tsv</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Qué hace este comando?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Consulta UniProt por proteínas que contienen el término <strong>hexokinase</strong> y están <strong>revisadas</strong> (reviewed:true).</li>
+<li>Descarga los resultados en formato <strong>TSV</strong> (valores separados por tabulaciones).</li>
+<li>Guarda el archivo como <code>hexokinase.tsv</code>.</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="crear-archivo-de-red-para-la-práctica" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="crear-archivo-de-red-para-la-práctica"><span class="header-section-number">2.2</span> Crear archivo de red para la práctica</h2>
+<p>Vamos a procesar ese archivo para obtener un archivo más sencillo que podremos usar para construir redes en R.</p>
+<pre><code>grep 'EC 2.7.1.1' hexokinase.tsv | cut -f 2,6 | tr '_' '    ' | cut -f 1,3 | cut -f 1,2 -d ' ' &gt; net</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué hace este comando complejo?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Qué hace este comando complejo?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong><code>grep 'EC 2.7.1.1'</code></strong>: selecciona solo las líneas con la enzima hexoquinasa (EC 2.7.1.1).</li>
+<li><strong><code>cut -f 2,6</code></strong>: extrae las columnas 2 y 6 (identificador y organismo).</li>
+<li><strong><code>tr '_' '\t'</code></strong>: reemplaza guiones bajos por tabulaciones.</li>
+<li><strong><code>cut -f 1,3</code></strong>: selecciona las columnas resultantes (id de proteína y especie).</li>
+<li><strong><code>cut -f 1,2 -d ' '</code></strong>: elimina cualquier texto adicional tras el segundo campo.</li>
+<li><strong><code>&gt; net</code></strong>: guarda el resultado final en un archivo llamado <code>net</code>.</li>
+</ol>
+</div>
+</div>
+<p>Este archivo contendrá dos columnas: el identificador de proteína y la especie correspondiente. Es un formato simple que podemos usar como entrada en R para crear redes de relaciones entre proteínas y organismos.</p>
+<hr>
+</section>
+<section id="por-qué-hacemos-esto" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="por-qué-hacemos-esto"><span class="header-section-number">2.3</span> ¿Por qué hacemos esto?</h2>
+<p>La idea es tener un conjunto de datos <strong>realista y sencillo</strong> que nos permita centrarnos en aprender R y cómo manejar estructuras de red.</p>
+<p>En esta primera sesión trabajaremos con <code>net</code>, el archivo que acabamos de generar. En la próxima sesión añadiremos más datos, como un archivo de <strong>conteo</strong>, y aplicaremos técnicas estadísticas y visualización en R para completar el análisis.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Sabías que…?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este pequeño archivo simula una <strong>red bipartita</strong> entre proteínas y organismos. Más adelante exploraremos cómo convertir este tipo de datos en grafos utilizando R.</p>
+</div>
+</div>
+<p>Ahora que tenemos nuestro fichero listo, podemos empezar de mirar el analisis con R.</p>
+</section>
+<section id="qué-es-r" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="qué-es-r"><span class="header-section-number">2.4</span> ¿Qué es R?</h2>
+<p><strong>R</strong> es un lenguaje y entorno de programación orientado al análisis estadístico y la representación gráfica de datos. Desarrollado originalmente por Ross Ihaka y Robert Gentleman en la Universidad de Auckland, R ha evolucionado hasta convertirse en una herramienta esencial en campos como la bioinformática.</p>
+<section id="componentes-principales-de-r" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="componentes-principales-de-r"><span class="header-section-number">2.4.1</span> Componentes principales de R</h3>
+<ul>
+<li><strong>Terminal propia</strong>: Permite la ejecución directa de comandos y scripts.</li>
+<li><strong>Lenguaje de programación</strong>: Ofrece estructuras y funciones para el desarrollo de algoritmos personalizados.</li>
+<li><strong>Gestor de ventanas gráficas</strong>: Facilita la creación y visualización de gráficos y representaciones visuales de datos.</li>
+</ul>
+</section>
+<section id="iniciando-la-terminal-de-r" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="iniciando-la-terminal-de-r"><span class="header-section-number">2.4.2</span> Iniciando la terminal de R</h3>
+<p>Para comenzar a utilizar R:</p>
+<ol type="1">
+<li><strong>Abrir la terminal</strong>: Dependiendo de tu sistema operativo, accede a la terminal o consola.</li>
+<li><strong>Iniciar R</strong>: Escribe <code>R</code> y presiona Enter. Verás un prompt que indica que estás en el entorno de R.</li>
+<li><strong>Salir de R</strong>: Para finalizar la sesión, escribe <code>q()</code> y confirma si deseas guardar el espacio de trabajo.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> R</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicia la sesión de R</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">q</span>()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sale de R</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Save workspace image? [y/n/c]: n</span></span></code></pre></div>
+<p>En las terminales de sistemas Linux/bash, los comandos se ingresan en texto blanco sobre fondo negro. Al iniciar R, el fondo cambia a gris y el prompt cambia a <code>&gt;</code>, indicando que ahora estás en el entorno de R.</p>
+</section>
+</section>
+<section id="aprendiendo-r-variables" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="aprendiendo-r-variables"><span class="header-section-number">2.5</span> Aprendiendo R: Variables</h2>
+<p>En R, las variables son contenedores que almacenan datos. Se utilizan para guardar y manipular información durante el análisis.</p>
+<section id="creación-y-uso-de-variables" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="creación-y-uso-de-variables"><span class="header-section-number">2.5.1</span> Creación y uso de variables</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> texto <span class="ot">&lt;-</span> <span class="st">'ejemplo'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> texto</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"ejemplo"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">7</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num_b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num <span class="sc">/</span> num_b</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">3.5</span></span></code></pre></div>
+<ul>
+<li><strong>Asignación</strong>: Se utiliza el operador <code>&lt;-</code> para asignar valores a las variables.</li>
+<li><strong>Cadenas de texto</strong>: Se encierran entre comillas simples o dobles.</li>
+<li><strong>Operaciones</strong>: R permite realizar operaciones matemáticas básicas con variables numéricas.</li>
+</ul>
+</section>
+</section>
+<section id="trabajando-con-datos-valores-especiales-y-comparaciones" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="trabajando-con-datos-valores-especiales-y-comparaciones"><span class="header-section-number">2.6</span> Trabajando con datos: Valores especiales y comparaciones</h2>
+<p>R maneja valores especiales que representan datos faltantes o indefinidos.</p>
+<section id="valores-especiales" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="valores-especiales"><span class="header-section-number">2.6.1</span> Valores especiales</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">5</span> <span class="sc">+</span> <span class="cn">NA</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">NA</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">is.na</span>(<span class="dv">5</span> <span class="sc">+</span> <span class="cn">NA</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">+</span> <span class="cn">NULL</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">NULL</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">is.null</span>(<span class="cn">NULL</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
+<ul>
+<li><strong>NA</strong>: Representa un valor faltante o no disponible.</li>
+<li><strong>NULL</strong>: Indica que un objeto no contiene información.</li>
+</ul>
+</section>
+<section id="comparaciones" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="comparaciones"><span class="header-section-number">2.6.2</span> Comparaciones</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">!=</span> <span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">&lt;=</span> <span class="dv">3</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
+<ul>
+<li><strong><code>==</code></strong>: Verifica igualdad.</li>
+<li><strong><code>!=</code></strong>: Verifica diferencia.</li>
+<li><strong><code>&lt;=</code></strong>: Verifica menor o igual.</li>
+</ul>
+</section>
+</section>
+<section id="aprendiendo-r-variables-compuestas" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="aprendiendo-r-variables-compuestas"><span class="header-section-number">2.7</span> Aprendiendo R: Variables compuestas</h2>
+<p>R permite trabajar con estructuras de datos más complejas, como los vectores, que son secuencias de elementos del mismo tipo.</p>
+<section id="creación-y-acceso-a-vectores" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="creación-y-acceso-a-vectores"><span class="header-section-number">2.7.1</span> Creación y acceso a vectores</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> texto <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'ab'</span>, <span class="st">'cd'</span>, <span class="st">'ef'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> texto</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"ab"</span> <span class="st">"cd"</span> <span class="st">"ef"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> texto[<span class="dv">2</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cd"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num[<span class="dv">1</span>]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1.5</span> <span class="fl">2.5</span> <span class="fl">3.5</span></span></code></pre></div>
+<ul>
+<li><strong>Creación</strong>: Se utiliza la función <code>c()</code> para combinar elementos en un vector.</li>
+<li><strong>Acceso</strong>: Se accede a los elementos mediante corchetes <code>[]</code> y especificando la posición.</li>
+<li><strong>Operaciones</strong>: Las operaciones matemáticas se aplican a cada elemento del vector.</li>
+</ul>
+</section>
+<section id="creación-avanzada-de-vectores" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="creación-avanzada-de-vectores"><span class="header-section-number">2.7.2</span> Creación avanzada de vectores</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">23</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">times =</span> <span class="dv">2</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">each =</span> <span class="dv">2</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">9</span> <span class="dv">10</span> <span class="dv">10</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">2</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">10</span> <span class="dv">12</span> <span class="dv">14</span> <span class="dv">16</span> <span class="dv">18</span> <span class="dv">20</span></span></code></pre></div>
+<ul>
+<li><strong>Secuencias</strong>: <code>1:7</code> genera una secuencia de 1 a 7.</li>
+<li><strong>Repeticiones</strong>: <code>rep()</code> repite elementos según lo especificado.</li>
+<li><strong>Secuencias con paso</strong>: <code>seq()</code> genera secuencias con un intervalo definido.</li>
+</ul>
+</section>
+<section id="operaciones-con-vectores" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="operaciones-con-vectores"><span class="header-section-number">2.7.3</span> Operaciones con Vectores</h3>
+<p>Los vectores en R permiten realizar operaciones entre elementos de manera eficiente y fácil. Vamos a ver algunos ejemplos prácticos:</p>
+<section id="sumar-y-multiplicar-vectores" class="level4" data-number="2.7.3.1">
+<h4 data-number="2.7.3.1" class="anchored" data-anchor-id="sumar-y-multiplicar-vectores"><span class="header-section-number">2.7.3.1</span> Sumar y multiplicar vectores</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">+</span> v2 <span class="co"># Suma de dos vectores</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">+</span> <span class="dv">1</span> <span class="co"># Sumar 1 a cada elemento del vector</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">*</span> <span class="dv">2</span> <span class="co"># Multiplicar cada elemento del vector por 2</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">8</span> <span class="dv">10</span></span></code></pre></div>
+<ul>
+<li><strong>Operaciones element-wise</strong>: Cuando realizamos operaciones entre vectores o entre un vector y un valor escalar, R realiza la operación de manera elemento a elemento.</li>
+<li><strong>Error de tamaños</strong>: Si intentamos operar vectores de diferentes tamaños, como en el siguiente ejemplo, se genera un error. Esto ocurre porque R no sabe cómo emparejar los elementos de los vectores.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> v1 <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>) <span class="sc">:</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  longer object length is not a multiple of shorter object length</span></code></pre></div>
+</section>
+<section id="operaciones-lógicas-con-vectores" class="level4" data-number="2.7.3.2">
+<h4 data-number="2.7.3.2" class="anchored" data-anchor-id="operaciones-lógicas-con-vectores"><span class="header-section-number">2.7.3.2</span> Operaciones lógicas con vectores</h4>
+<p>Los vectores también pueden ser usados en operaciones lógicas, que devuelven un vector de valores lógicos (<code>TRUE</code> o <code>FALSE</code>).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">&gt;</span> <span class="dv">2</span> <span class="co"># Compara cada elemento con 2</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">==</span> v2 <span class="co"># Verifica si los elementos de v1 son iguales a los de v2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">!=</span> v2 <span class="co"># Verifica si los elementos de v1 son diferentes a los de v2</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span></span></code></pre></div>
+<ul>
+<li><strong>Operadores lógicos</strong>:
+<ul>
+<li><strong><code>|</code></strong>: Operador OR, devuelve un vector de valores lógicos para cada comparación.</li>
+<li><strong><code>&amp;</code></strong>: Operador AND, devuelve un vector de valores lógicos.</li>
+<li><strong><code>||</code> y <code>&amp;&amp;</code></strong>: Versiones de OR y AND, pero devuelven un solo valor lógico en lugar de un vector. Estos operadores se utilizan para comparar solo el primer elemento de cada vector.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (v1 <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">|</span> (v2 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># Realiza OR lógico entre los vectores</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (v1 <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">&amp;</span> (v2 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># Realiza AND lógico entre los vectores</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (v1 <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">||</span> (v2 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># OR lógico entre solo el primer elemento de cada vector</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (v1 <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">&amp;&amp;</span> (v2 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># AND lógico entre solo el primer elemento de cada vector</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
+</section>
+<section id="formas-de-obtener-elementos-de-un-vector" class="level4" data-number="2.7.3.3">
+<h4 data-number="2.7.3.3" class="anchored" data-anchor-id="formas-de-obtener-elementos-de-un-vector"><span class="header-section-number">2.7.3.3</span> Formas de obtener elementos de un vector</h4>
+<p>Acceder a elementos específicos de un vector en R es muy sencillo, y existen diferentes formas de hacerlo:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1[<span class="dv">3</span>] <span class="co"># Accede al tercer elemento del vector</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># Accede a los elementos de las posiciones 2 a 4</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="co"># Accede a los elementos en las posiciones 1 y 3</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">3</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v1[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>)] <span class="co"># Usamos un vector lógico para acceder a elementos</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span></span></code></pre></div>
+<ul>
+<li><strong>Acceso directo</strong>: Usamos los índices entre corchetes <code>[]</code> para acceder a un elemento o a un subconjunto del vector.</li>
+<li><strong>Acceso con vectores lógicos</strong>: Se puede crear un vector lógico para seleccionar elementos específicos de un vector.</li>
+</ul>
+</section>
+<section id="formas-avanzadas-de-obtener-elementos-de-un-vector" class="level4" data-number="2.7.3.4">
+<h4 data-number="2.7.3.4" class="anchored" data-anchor-id="formas-avanzadas-de-obtener-elementos-de-un-vector"><span class="header-section-number">2.7.3.4</span> Formas avanzadas de obtener elementos de un vector</h4>
+<p>R ofrece métodos más avanzados para acceder a elementos en vectores. Aquí te mostramos algunos de ellos:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">which</span>(z <span class="sc">&gt;</span> <span class="dv">3</span>) <span class="co"># Devuelve las posiciones que cumplen la condición</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">7</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z[<span class="fu">which</span>(z <span class="sc">&gt;</span> <span class="dv">3</span>)] <span class="co"># Usamos las posiciones para extraer los elementos</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span> <span class="dv">6</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> w <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">match</span>(w, z) <span class="co"># Encuentra las posiciones de los elementos de w en z</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">1</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z[<span class="fu">match</span>(w, z)] <span class="co"># Extrae los elementos de z que coinciden con w</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span></span></code></pre></div>
+<ul>
+<li><strong><code>which()</code></strong>: Devuelve los índices de los elementos que cumplen una condición lógica (por ejemplo, <code>z &gt; 3</code>).</li>
+<li><strong><code>match()</code></strong>: Devuelve los índices de las posiciones de los elementos de un vector en otro.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="aplicaciones-en-bioinformática" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="aplicaciones-en-bioinformática"><span class="header-section-number">2.8</span> Aplicaciones en Bioinformática</h2>
+<p>En bioinformática, la manipulación de vectores y matrices es esencial para manejar grandes cantidades de datos, como secuencias genómicas o interacciones proteína-proteína. Por ejemplo, podemos usar vectores para almacenar información sobre expresiones génicas y realizar operaciones de análisis, como comparar los valores de expresión en diferentes condiciones experimentales o identificar genes diferencialmente expresados.</p>
+<p>Ejemplo: Comparar la expresión génica en dos condiciones diferentes.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expresión génica en dos condiciones</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>expr_condition_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">6</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>expr_condition_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">5</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificar genes cuya expresión es mayor en la condición 1</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>expr_condition_1 <span class="sc">&gt;</span> expr_condition_2</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="cn">TRUE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span></span></code></pre></div>
+<p>Aquí, estamos comparando los niveles de expresión génica entre dos condiciones, y el resultado nos indica qué genes tienen una mayor expresión en la primera condición. Esto es solo un ejemplo sencillo de cómo las operaciones con vectores pueden ser aplicadas en el análisis de datos biológicos.</p>
+<section id="funciones-sobre-vectores" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="funciones-sobre-vectores"><span class="header-section-number">2.8.1</span> Funciones sobre Vectores</h3>
+<p>En R, las funciones aplicadas a vectores nos permiten obtener estadísticas y realizar análisis rápidamente sobre los datos. Aquí algunos ejemplos útiles:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">9</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(num) <span class="co"># Devuelve la longitud del vector</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sum</span>(num) <span class="co"># Suma de todos los elementos del vector</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">30</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(num) <span class="co"># Media de los elementos del vector</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">max</span>(num) <span class="co"># Valor máximo en el vector</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">9</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sd</span>(num) <span class="co"># Desviación estándar del vector</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.582</span></span></code></pre></div>
+<ul>
+<li><strong>Funciones estadísticas</strong>: Estas funciones proporcionan información clave sobre la distribución de los datos en el vector.</li>
+<li><strong>R está orientado al cálculo y la estadística</strong>, por lo que tiene potentes funciones para analizar conjuntos de datos de manera eficiente.</li>
+</ul>
+</section>
+</section>
+<section id="evolución-del-vector-la-matriz" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="evolución-del-vector-la-matriz"><span class="header-section-number">2.9</span> Evolución del Vector: La Matriz</h2>
+<p>Una matriz es similar a un vector, pero tiene dos dimensiones: filas y columnas. Es útil para representar datos más complejos, como matrices de interacción entre genes y muestras.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="co"># Crear una matriz 5x4 con todos los valores iguales a 1</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">4</span>) <span class="co"># Forma abreviada</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(m) <span class="co"># Devuelve las dimensiones de la matriz</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span> <span class="dv">4</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>) <span class="co"># Usamos un vector para rellenar la matriz</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">t</span>(m) <span class="co"># Transpone la matriz, intercambiando filas por columnas</span></span></code></pre></div>
+<ul>
+<li><strong>Dimensiones de la matriz</strong>: Las matrices tienen dos dimensiones, lo que permite representar diferentes aspectos de los datos (como genes y muestras en un estudio).</li>
+<li><strong>Operaciones en matrices</strong>: Solo puede contener un tipo de dato (generalmente numérico).</li>
+</ul>
+<section id="cómo-acceder-a-los-datos-de-una-matriz" class="level3" data-number="2.9.1">
+<h3 data-number="2.9.1" class="anchored" data-anchor-id="cómo-acceder-a-los-datos-de-una-matriz"><span class="header-section-number">2.9.1</span> Cómo Acceder a los Datos de una Matriz</h3>
+<p>Las matrices tienen una estructura bidimensional, lo que permite acceder a sus elementos de varias maneras, ya sea por filas, columnas o índices específicos.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[<span class="dv">2</span>,<span class="dv">3</span>] <span class="co"># Accedemos a un solo elemento en la fila 2, columna 3</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[<span class="dv">2</span>,] <span class="co"># Extraemos toda la fila 2</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">8</span> <span class="dv">10</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[,<span class="dv">2</span>] <span class="co"># Extraemos toda la columna 2</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">8</span> <span class="dv">10</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[<span class="sc">-</span><span class="dv">1</span>,] <span class="co"># Extraemos todas las filas, excepto la primera</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span> <span class="dv">6</span> <span class="dv">8</span> <span class="dv">10</span></span></code></pre></div>
+<ul>
+<li><strong>Acceso a elementos</strong>: Se puede acceder a un único elemento usando la notación <code>m[fila, columna]</code>, o a filas y columnas completas usando <code>m[fila,]</code> y <code>m[,columna]</code>.</li>
+<li><strong>Operaciones sobre matrices</strong>: Al igual que con los vectores, se pueden realizar operaciones sobre las matrices, como comparar elementos o extraer subconjuntos con operaciones lógicas.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>] <span class="co"># Extraemos un subgrupo de filas y columnas</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[<span class="dv">1</span>,] <span class="sc">==</span> m[,<span class="dv">1</span>] <span class="co"># Comparar una fila con una columna</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m <span class="sc">&gt;</span> <span class="dv">3</span> <span class="co"># Genera una matriz de valores TRUE/FALSE</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span> <span class="cn">TRUE</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> m[m <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="co"># Seleccionamos los elementos que son mayores a 3</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span> <span class="dv">6</span> <span class="dv">8</span> <span class="dv">10</span></span></code></pre></div>
+</section>
+</section>
+<section id="el-cajón-de-sastre-la-lista" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="el-cajón-de-sastre-la-lista"><span class="header-section-number">2.10</span> El Cajón de Sastre: La Lista</h2>
+<p>Las listas en R permiten almacenar objetos heterogéneos, es decir, objetos de diferentes tipos de datos. Se pueden asignar nombres a los elementos de la lista para facilitar el acceso.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">boo =</span> v1, <span class="at">foo =</span> v2, <span class="at">zoo =</span> <span class="st">"Hola"</span>) <span class="co"># Creamos una lista con diferentes tipos de objetos</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1[<span class="st">"boo"</span>] <span class="co"># Accedemos al objeto con nombre 'boo' dentro de la lista</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>boo</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1[[<span class="st">"boo"</span>]] <span class="co"># Extraemos el objeto original sin la lista</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1<span class="sc">$</span>boo <span class="co"># Equivalente al anterior</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1[[<span class="dv">1</span>]] <span class="co"># Accedemos a la primer entrada de la lista</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1<span class="sc">$</span>Something <span class="ot">&lt;-</span> <span class="st">"A thing"</span> <span class="co"># Añadimos un nuevo elemento a la lista</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1[[<span class="st">"algo"</span>]] <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">10</span>) <span class="co"># Añadimos otro nuevo elemento</span></span></code></pre></div>
+<ul>
+<li><strong>Listas en R</strong>: Las listas permiten almacenar diferentes tipos de datos dentro de un mismo objeto, como vectores, matrices, o incluso otras listas.</li>
+<li><strong>Acceso a elementos</strong>: Se puede acceder a los elementos de una lista por nombre (<code>a1$boo</code>), por índice (<code>a1[[1]]</code>), o por nombre de clave dentro de la lista (<code>a1[["boo"]]</code>).</li>
+</ul>
+</section>
+<section id="organizando-datos-dataframes" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="organizando-datos-dataframes"><span class="header-section-number">2.11</span> Organizando Datos: DataFrames</h2>
+<p>Un <em>data frame</em> es una estructura muy usada en R para almacenar y organizar datos tabulares, como una hoja de cálculo. Cada columna puede contener diferentes tipos de datos.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nitrato <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">9</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> peso <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">11</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> longitud <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">'nitrato'</span> <span class="ot">=</span> nitrato, <span class="st">'peso'</span> <span class="ot">=</span> peso, <span class="st">'longitud'</span> <span class="ot">=</span> longitud)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summary</span>(data) <span class="co"># Resumen estadístico de cada columna</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  nitrato         peso         longitud  </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">2.000</span>   Min.   <span class="sc">:</span><span class="fl">4.00</span>   Min.   <span class="sc">:</span><span class="fl">1.0</span>  </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>st Qu.<span class="sc">:</span><span class="fl">3.000</span>   <span class="dv">1</span>st Qu.<span class="sc">:</span><span class="fl">5.50</span>   <span class="dv">1</span>st Qu.<span class="sc">:</span><span class="fl">1.5</span>  </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">4.500</span>   Median <span class="sc">:</span><span class="fl">6.00</span>   Median <span class="sc">:</span><span class="fl">2.0</span>  </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">5.000</span>   Mean   <span class="sc">:</span><span class="fl">7.00</span>   Mean   <span class="sc">:</span><span class="fl">2.2</span>  </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span>rd Qu.<span class="sc">:</span><span class="fl">7.000</span>   <span class="dv">3</span>rd Qu.<span class="sc">:</span><span class="fl">8.00</span>   <span class="dv">3</span>rd Qu.<span class="sc">:</span><span class="fl">3.0</span>  </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">9.000</span>   Max.   <span class="sc">:</span><span class="fl">11.00</span>   Max.   <span class="sc">:</span><span class="fl">4.0</span>  </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cor</span>(data) <span class="co"># Calcula las correlaciones entre las columnas</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>           nitrato    peso   longitud</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>nitrato   <span class="fl">1.0000000</span> <span class="fl">0.98104</span> <span class="fl">0.90717</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>peso      <span class="fl">0.9810436</span> <span class="fl">1.00000</span> <span class="fl">0.90535</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>longitud  <span class="fl">0.9071734</span> <span class="fl">0.90535</span> <span class="fl">1.00000</span></span></code></pre></div>
+<ul>
+<li><strong>Dataframes</strong>: Permiten organizar datos de manera estructurada y realizar análisis fácilmente.</li>
+<li><strong>Funciones útiles</strong>: <em><code>summary()</code></em> ofrece estadísticas descriptivas y <em><code>cor()</code></em> calcula las correlaciones entre las variables.</li>
+</ul>
+</section>
+<section id="consultando-datos-de-los-dataframes" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="consultando-datos-de-los-dataframes"><span class="header-section-number">2.12</span> Consultando Datos de los DataFrames</h2>
+<p>Al igual que las matrices, podemos acceder a los datos de un <em>data frame</em> por nombre de columna, o utilizando índices.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">colnames</span>(data) <span class="co"># Devuelve los nombres de las columnas</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"nitrato"</span>  <span class="st">"peso"</span>     <span class="st">"longitud"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">rownames</span>(data) <span class="co"># Devuelve los nombres de las filas</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"1"</span> <span class="st">"2"</span> <span class="st">"3"</span> <span class="st">"4"</span> <span class="st">"5"</span> <span class="st">"6"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(data) <span class="co"># Devuelve las dimensiones del data frame</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span> <span class="dv">3</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">nrow</span>(data) <span class="co"># Devuelve solo el número de filas</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ncol</span>(data) <span class="co"># Devuelve solo el número de columnas</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span></code></pre></div>
+<ul>
+<li><strong>Acceso y manipulación de <em>data frames</em></strong>: Se pueden cambiar los nombres de las columnas y filas con <em><code>colnames()</code></em> y <em><code>rownames()</code></em>, y obtener información sobre las dimensiones con <em><code>dim()</code></em>, <em><code>nrow()</code></em>, y <em><code>ncol()</code></em>.</li>
+</ul>
+<section id="accediendo-a-datos-de-los-dataframes" class="level3" data-number="2.12.1">
+<h3 data-number="2.12.1" class="anchored" data-anchor-id="accediendo-a-datos-de-los-dataframes"><span class="header-section-number">2.12.1</span> Accediendo a Datos de los DataFrames</h3>
+<p>R proporciona múltiples formas de acceder a las columnas, filas, o subconjuntos de un <em>data frame</em>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data<span class="sc">$</span>nitrato <span class="co"># Accedemos a la columna nitrato</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">9</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data[<span class="dv">1</span>,] <span class="co"># Accedemos a la primera fila</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">1</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data[,<span class="dv">1</span>] <span class="co"># Accedemos a la primera columna</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">9</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># Extraemos las primeras dos filas y las columnas 2 y 3</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),] <span class="co"># Extraemos las filas 1 y 3</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">1</span></span></code></pre></div>
+<ul>
+<li><strong>Acceso con índices</strong>: Se puede acceder a filas y columnas de la misma manera que con matrices, utilizando índices numéricos o vectores lógicos.</li>
+</ul>
+</section>
+</section>
+<section id="graficando-datos" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="graficando-datos"><span class="header-section-number">2.13</span> Graficando Datos</h2>
+<p>R ofrece una gran variedad de herramientas para visualizar datos. Aquí te mostramos cómo empezar con gráficos simples:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(<span class="at">x =</span> data<span class="sc">$</span>nitrato, <span class="at">y =</span> data<span class="sc">$</span>peso, <span class="at">main =</span> <span class="st">"Nitrato vs Peso"</span>, <span class="at">xlab =</span> <span class="st">"Nitrato"</span>, <span class="at">ylab =</span> <span class="st">"Peso"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<ul>
+<li><strong>Gráficos en R</strong>: El comando <em><code>plot()</code></em> crea un gráfico básico, donde podemos especificar los ejes <em>x</em> e <em>y</em>, el título del gráfico, las etiquetas y el color de los puntos. Esto es útil para explorar la relación entre variables.</li>
+</ul>
+<p>GRAFICANDO DATOS</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(<span class="at">x=</span>data<span class="sc">$</span>nitrato,   <span class="co"># Datos eje X</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span>data<span class="sc">$</span>longitud,       <span class="co"># Datos eje Y</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="dv">5</span>,         <span class="co"># Forma y tamaño</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="st">"dark red"</span>)        <span class="co"># Color</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(<span class="at">x=</span>data<span class="sc">$</span>nitrato,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span>data<span class="sc">$</span>peso,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="dv">5</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="st">"dark red"</span>)</span></code></pre></div>
+<p>GRAFICANDO DATOS CON <strong>ggplot2</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(ggplot2)       <span class="co"># Cargamos una librería de graficado</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data=</span>data,      <span class="co"># Fuente de datos a graficar</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>nitrato,         <span class="co"># aes asigna variables a ejes, en este caso nitrato a x</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span>peso)) <span class="sc">+</span>            <span class="co"># peso a y, el + indica que hay que añadir un elemento gráfico</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()            <span class="co"># Definimos tipo de gráfica</span></span></code></pre></div>
+<p>Comando completo:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data=</span>data, <span class="fu">aes</span>(<span class="at">x=</span>nitrato, <span class="at">y=</span>peso)) <span class="sc">+</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p>Las librerías son módulos que añaden funciones a <strong>R</strong> programadas por otras personas. De esta manera, cualquiera puede expandir las capacidades de la plataforma.</p>
+<p>Prueba con <code>nitrato/longitud</code> y usar <code>geom_point()</code> en vez de <code>geom_line()</code>.</p>
+<p>En estos casos, <code>&gt;</code> indica que <strong>R</strong> se queda esperando a que indiquéis un parámetro adicional a la orden anterior. Os aparecerá como un <code>+</code>.</p>
+<p>GRAFICANDO DATOS CON FACTORES</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> condicion <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'A'</span>, <span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'B'</span>, <span class="st">'B'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">'nitrato'</span> <span class="ot">=</span> nitrato, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'peso'</span> <span class="ot">=</span> peso,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">'longitud'</span> <span class="ot">=</span> longitud,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'condición'</span> <span class="ot">=</span> condicion)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>condicion, <span class="at">y=</span>nitrato, <span class="at">fill=</span>condicion)) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p>Ahora tenemos un nuevo elemento en <code>aes</code>, <strong>fill</strong>, que permite dar color a las series. <code>geom_boxplot</code> nos genera un nuevo tipo de gráfico.</p>
+</section>
+<section id="funciones-y-librerías" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="funciones-y-librerías"><span class="header-section-number">2.14</span> FUNCIONES Y LIBRERÍAS</h2>
+<p>Las librerías son módulos que añaden funciones a <strong>R</strong> programadas por otras personas. De esta manera, cualquiera puede expandir las capacidades de la plataforma. Más adelante usaremos <strong>igraph</strong> para manipular redes.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> res <span class="ot">&lt;-</span> <span class="fu">cor</span>(data)    <span class="co"># Todos los comandos de R son funciones.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Se le da la información para trabajar (argumentos de entrada), en este caso data</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La función devuelve el resultado (guardado en res)</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> centralize_vector <span class="ot">&lt;-</span> <span class="cf">function</span>(vector){   <span class="co"># function permite crear funciones</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  new_vector <span class="ot">&lt;-</span> vector <span class="sc">-</span> <span class="fu">mean</span>(vector)     <span class="co"># Entre {} indicamos los pasos</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(new_vector)                      <span class="co"># return entrega los resultados que consideramos relevantes</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">centralize_vector</span>(data<span class="sc">$</span>peso)            <span class="co"># Aplicamos la función</span></span></code></pre></div>
+</section>
+<section id="leyendo-archivos" class="level2" data-number="2.15">
+<h2 data-number="2.15" class="anchored" data-anchor-id="leyendo-archivos"><span class="header-section-number">2.15</span> LEYENDO ARCHIVOS</h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> net_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'net'</span>, <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)  <span class="co"># Leemos el archivo net</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> net_data</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(net_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Gene'</span>, <span class="st">'Organism'</span>)  <span class="co"># Con estas instrucciones, definimos los nombres de las columnas del dataframe</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> net_data</span></code></pre></div>
+<p>Con este código generamos un dataframe a partir del archivo ‘net’ que construimos al comienzo de esta sesión con el que vamos a hacer una sencilla práctica de redes.</p>
+</section>
+<section id="redes-biológicas" class="level2" data-number="2.16">
+<h2 data-number="2.16" class="anchored" data-anchor-id="redes-biológicas"><span class="header-section-number">2.16</span> REDES BIOLÓGICAS</h2>
+<p>• Son modelos para detectar relaciones entre elementos.<br>
+• Se componen de:<br>
+- <strong>Nodos</strong>: Entidades que son objeto de estudio.<br>
+- <strong>Enlaces</strong>: Conexiones existentes entre las entidades del modelo.</p>
+<p>• Si los nodos son:<br>
+- <strong>De un solo tipo</strong>: La red se considera monopartita.<br>
+- <strong>Más de un tipo</strong>: N-partita, por ejemplo, bipartita, tripartita, etc.<br>
+• Si los enlaces son:<br>
+- <strong>Binarios</strong>: Representan únicamente la existencia o ausencia de relaciones.<br>
+- <strong>Ponderados</strong>: Reflejan la probabilidad o la magnitud de la conexión.</p>
+<p>COMO SE DESCRIBEN LAS REDES NORMALMENTE<br>
+<strong>PAREJAS</strong><br>
+- C – B<br>
+- C – A<br>
+- B – D<br>
+- A – D</p>
+<p><strong>MATRICES DE ADYACENCIA</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<section id="creando-redes-en-r" class="level3" data-number="2.16.1">
+<h3 data-number="2.16.1" class="anchored" data-anchor-id="creando-redes-en-r"><span class="header-section-number">2.16.1</span> CREANDO REDES EN R</h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(igraph) <span class="co"># Cargamos una librería de manejo de redes</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> net1 <span class="ot">&lt;-</span> <span class="fu">graph</span>( <span class="at">edges=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">1</span>), <span class="at">n=</span><span class="dv">10</span> ) </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las conexiones (edges) como 1-2, 2-3 y 3-1 para una red de 10 nodos</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(net1) <span class="co"># Graficamos la red</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> net2 <span class="ot">&lt;-</span> <span class="fu">graph</span>( <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Jim"</span>, <span class="st">"Jim"</span>, <span class="st">"Jill"</span>, <span class="st">"Jill"</span>, <span class="st">"John"</span>))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># En este caso, al definir las conexiones, se sobreentiende la creación de los nodos personas.</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(net2)</span></code></pre></div>
+</section>
+<section id="creando-nuestra-red-real" class="level3" data-number="2.16.2">
+<h3 data-number="2.16.2" class="anchored" data-anchor-id="creando-nuestra-red-real"><span class="header-section-number">2.16.2</span> CREANDO NUESTRA RED REAL</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> real_net <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d=</span>net_data) </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos el dataframe “net_data” en un contenedor de información especial de la librería igraph. Estos contenedores se llaman objetos.</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(real_net)</span></code></pre></div>
+</section>
+<section id="examinando-los-componentes-de-la-red" class="level3" data-number="2.16.3">
+<h3 data-number="2.16.3" class="anchored" data-anchor-id="examinando-los-componentes-de-la-red"><span class="header-section-number">2.16.3</span> EXAMINANDO LOS COMPONENTES DE LA RED</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">V</span>(real_net) <span class="co"># Vemos los nodos</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">E</span>(real_net) <span class="co"># Vemos las parejas</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> real_net[] <span class="co"># Vemos la matriz de adyacencia</span></span></code></pre></div>
+</section>
+<section id="formas-de-visualizar-una-red-layouts" class="level3" data-number="2.16.4">
+<h3 data-number="2.16.4" class="anchored" data-anchor-id="formas-de-visualizar-una-red-layouts"><span class="header-section-number">2.16.4</span> FORMAS DE VISUALIZAR UNA RED: <strong>LAYOUTS</strong></h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(real_net, <span class="at">layout=</span>layout_randomly)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(real_net, <span class="at">layout=</span><span class="fu">layout_on_sphere</span>(real_net))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(real_net, <span class="at">layout=</span><span class="fu">layout_in_circle</span>(real_net))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(real_net, <span class="at">layout=</span><span class="fu">layout_with_kk</span>(real_net))</span></code></pre></div>
+<p>Los <strong>layouts</strong> son formas de representar las redes. Explorando distintos layouts, la red adquiere distintas estructuras que permiten inferir conclusiones biológicas. En nuestro caso, podemos ver que las hexoquinasas son más frecuentes, cuáles son exclusivas de cierto tipo de organismos, o qué organismos presentan más diversidad de hexoquinasas.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro_computacion.html" class="pagination-link" aria-label="Introducción a la terminal de Linux">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a la terminal de Linux</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./seq_genomica.html" class="pagination-link" aria-label="Secuenciación y genómica">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Secuenciación y genómica</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
