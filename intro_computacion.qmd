@@ -1,1 +1,104 @@
 # Introducción a la terminal de Linux
+
+## La tecnología en nuestra vida
+
+Nuestro principal contacto con la tecnología digital en el día a día lo llevamos a cabo con los móviles y los ordenadores.
+
+## ¿Cómo interactuamos con la tecnología?
+
+- Interactuamos con los aparatos digitales mediante **interfaces gráficas**.
+- Estas nos muestran las opciones disponibles, pero **¿es eso todo lo que pueden hacer nuestros dispositivos?**
+
+---
+
+# ¿Qué hace que funcione nuestra tecnología?
+
+| Componente | Descripción |
+|------------|-------------|
+| **Hardware** | Parte física del aparato. Permite realizar operaciones de cómputo. |
+| **Software** | Conjunto de instrucciones que controlan el aparato. |
+
+## Sistema Operativo
+
+Un sistema operativo está compuesto por varias capas:
+
+- **Kernel**: Capa base que permite a los programas usar el hardware.
+- **Shell/Terminal**: Interfaz de texto que permite acceder a todo el potencial del sistema.
+- **Aplicaciones**: Programas específicos (como Spotify o Microsoft Office).
+
+---
+
+# Primer contacto con la Shell/Terminal
+
+Con la Terminal podemos hacer casi cualquier cosa en el sistema operativo, pero requiere práctica.
+
+**Reacción común al principio:**
+
+![Reacción común](https://www.flickr.com/photos/54650720@N05/528926627)
+
+---
+
+## Actitud vs Aptitud
+
+> **Actitud**: Disposición positiva al aprender  
+> **Aptitud**: Capacidad que se adquiere con práctica
+
+No necesitas tener la **aptitud** ahora, pero una buena **actitud** te llevará a desarrollarla.
+
+> 🧠 *El ordenador no es tu enemigo, es una herramienta poderosa.*
+
+---
+
+# Anatomía de la Terminal
+
+```bash
+> ls
+> touch prueba
+```
+
+- El símbolo `>` indica que la terminal está lista.
+- Se escribe un **comando**, se pulsa **Enter**, y se ejecuta.
+- Muchos comandos aceptan argumentos adicionales.
+- El ratón **no se usa** como en interfaces gráficas (no puedes "hacer clic" para moverte).
+- Puedes seleccionar/copiar/pegar texto, pero el trabajo principal se hace **escribiendo comandos**.
+
+---
+
+# Reglas de uso
+
+⚠️ **¡Importante!**
+
+- **NO COPIAR Y PEGAR** los comandos. Escríbelos a mano.
+- Algunos caracteres pueden distorsionarse al copiar.
+- Respeta los **espacios** y escribe los comandos **en una sola línea**.
+- El símbolo `>` al inicio de los comandos **NO se escribe**.
+- Puede aparecer como `~>`, `~$`, `$`, dependiendo de la terminal.
+- Lee cuidadosamente los cuadros explicativos del material.
+- Las lecciones son secuenciales: asegúrate de continuar desde donde lo dejaste.
+
+---
+
+# Consejos para trabajar
+
+🧩 Si trabajas en varias sesiones:
+
+- Anota en qué **directorio** estabas y qué comandos ejecutaste.
+- Usa comandos como `pwd` (mostrar ruta actual) y `ls` (ver contenidos del directorio) para orientarte.
+
+💡 **Teclas útiles:**
+
+- `↑` y `↓`: Navega por comandos anteriores
+- `Tab`: Autocompleta nombres de archivos o comandos
+- `Ctrl + C`: Detiene un comando en ejecución
+- `Ctrl + L`: Limpia la pantalla
+
+---
+
+# ¡Ánimo!
+
+Recuerda que aprender a usar la terminal es una habilidad poderosa. Empieza poco a poco, practica mucho y verás cómo tu aptitud crece con el tiempo. ¡Buena actitud y manos al teclado! 💻🚀
+```
+
+---
+
+¿Te gustaría que añadiera un poco de código interactivo (por ejemplo, con bloques de terminal simulados) o una sección de preguntas frecuentes?
